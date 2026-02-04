@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldLearn - Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+        }
+
+        /* Shield logo */
+        .shield-logo-small {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+        }
+
+        .shield-logo-small img {
+            width: 70px;
+        }
+
+        /* Lock / Unlock */
+        .unlock-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .unlock-circle img {
+            width: 160px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .animate {
+            transform: scale(1.15);
+            opacity: 0.85;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .options-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .forgot-link {
+            color: #ef4444;
+            text-decoration: none;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            background: #2563eb;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .register-link a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+
+        <!-- Logo -->
+        <div class="shield-logo-small">
+            <img src="images/logo.png" alt="ShieldLearn logo">
+        </div>
+
+        <!-- Lock / Unlock Icon -->
+        <div class="unlock-container">
+            <div class="unlock-circle">
+                <img id="lockIcon" src="images/lock.png" alt="Lock icon">
+            </div>
+        </div>
+
+        <!-- Inputs -->
+        <div class="input-group">
+            <input type="text" id="username" placeholder="enter your username here:">
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" placeholder="enter your password here:">
+        </div>
+
+        <div class="options-row">
+            <label>
+                <input type="checkbox"> remember me?
+            </label>
+            <a href="#" class="forgot-link">forgot password?</a>
+        </div>
+
+        <div>
+            <a href="dash.html"> <button class="login-button">LOGIN</button></a>
+        </div>
+
+        <div class="register-link">
+            <a href="register.html">No account? Register here!</a>
+        </div>
+
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const lockIcon = document.getElementById("lockIcon");
+
+        passwordInput.addEventListener("input", () => {
+            if (passwordInput.value.length > 0) {
+                lockIcon.src = "images/unlock.png";
+            } else {
+                lockIcon.src = "images/lock.png";
+            }
+
+            lockIcon.classList.add("animate");
+
+            setTimeout(() => {
+                lockIcon.classList.remove("animate");
+            }, 300);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldLearn - Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .signup-container {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+        /* Shield logo */
+        .shield-logo-small {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+        }
+
+        .shield-logo-small img {
+            width: 70px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
+            padding: 12px 16px;
+            border: 2px solid #d1d5db;
+            border-radius: 20px;
+            font-size: 14px;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        input::placeholder {
+            color: #9ca3af;
+        }
+
+        .password-hint {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .tailored-content {
+            margin-bottom: 20px;
+        }
+
+        .content-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            border: 2px solid #d1d5db;
+        }
+
+        .content-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .content-option:hover {
+            background: #f3f4f6;
+        }
+
+        .content-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .content-option label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .learn-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .learn-link:hover {
+            text-decoration: underline;
+        }
+
+        .icon-selection {
+            margin-bottom: 20px;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            border: 2px solid #d1d5db;
+        }
+
+        .icon-option {
+            aspect-ratio: 1;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #f9fafb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .icon-option:hover {
+            background: #f3f4f6;
+            transform: scale(1.05);
+        }
+
+        .icon-option.selected {
+            border-color: #3b82f6;
+            background: #dbeafe;
+        }
+
+        .icon-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .done-button {
+            width: 100%;
+            padding: 14px;
+            background: #22c55e;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .done-button:hover {
+            background: #16a34a;
+        }
+
+        .done-button:active {
+            transform: scale(0.98);
+        }
+
+        .done-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .icon-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <!-- Small Shield Logo -->
+        <div class="shield-logo-small">
+            <img src="images/logo.png" alt="logo">
+        </div>
+
+        <h1>Fill out this form to get registered</h1>
+
+        <!-- Name and Email -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Enter your name:</label>
+                <input type="text" id="name" placeholder="AL the AI bot">
+            </div>
+            <div class="form-group">
+                <label for="email">Enter your email address:</label>
+                <input type="email" id="email" placeholder="abcd@mail.com">
+            </div>
+        </div>
+
+        <!-- Password and Phone -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="password">Enter your password:</label>
+                <input type="password" id="password" placeholder="must be 8 characters long">
+                <span class="password-hint">must be 8 characters long</span>
+            </div>
+            <div class="form-group">
+                <label for="phone">Enter your phone number:</label>
+                <input type="tel" id="phone" placeholder="+447123456788">
+            </div>
+        </div>
+
+        <!-- Tailored Content -->
+        <div class="tailored-content">
+            <label>Do you want tailored content? (I am a ...)</label>
+            <div class="content-options">
+                <div class="content-option">
+                    <input type="radio" id="professional" name="content" value="professional">
+                    <label for="professional">Professional</label>
+                </div>
+                <div class="content-option">
+                    <input type="radio" id="student" name="content" value="student">
+                    <label for="student">Student</label>
+                </div>
+                <div class="content-option">
+                    <input type="radio" id="learning" name="content" value="learning">
+                    <label for="learning">I'm here to learn how to stay safe!</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Icon Selection -->
+        <div class="icon-selection">
+            <label>select an icon:</label>
+            <div class="icon-grid">
+                <div class="icon-option" data-icon="briefcase">
+                    <img src="images/user profiles/1.png" alt="Briefcase">
+                </div>
+                <div class="icon-option" data-icon="graduation">
+                    <img src="images/user profiles/2.png" alt="Graduation Cap">
+                </div>
+                <div class="icon-option" data-icon="bomb">
+                    <img src="images/user profiles/3.png" alt="Bomb">
+                </div>
+                <div class="icon-option" data-icon="bug">
+                    <img src="images/user profiles/4.png" alt="Bug">
+                </div>
+                <div class="icon-option" data-icon="question">
+                    <img src="images/user profiles/5.png" alt="Question Mark">
+                </div>
+                <div class="icon-option" data-icon="virus">
+                    <img src="images/user profiles/6.png" alt="Virus">
+                </div>
+                <div class="icon-option" data-icon="shield">
+                    <img src="images/user profiles/7.png" alt="Shield">
+                </div>
+                <div class="icon-option" data-icon="server">
+                    <img src="images/user profiles/8.png" alt="Server">
+                </div>
+            </div>
+        </div>
+
+        <!-- Done Button -->
+        <button class="done-button" onclick="handleSignup()">done!</button>
+    </div>
+
+    <script>
+        // Icon selection
+        const iconOptions = document.querySelectorAll('.icon-option');
+        let selectedIcon = null;
+
+        iconOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                iconOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedIcon = this.dataset.icon;
+            });
+        });
+
+        // Form submission
+        function handleSignup() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const phone = document.getElementById('phone').value;
+            const content = document.querySelector('input[name="content"]:checked')?.value;
+
+            // Validation
+            if (!name || !email || !password || !phone) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long');
+                return;
+            }
+
+            if (!content) {
+                alert('Please select a content preference');
+                return;
+            }
+
+            if (!selectedIcon) {
+                alert('Please select an icon');
+                return;
+            }
+
+            // If validation passes, navigate to how-to page
+            console.log('Signup data:', { name, email, password, phone, content, selectedIcon });
+            window.location.href = 'howto.html';
+        }
+
+        // Enter key functionality
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleSignup();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

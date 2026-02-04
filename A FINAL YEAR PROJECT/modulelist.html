@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Modules - ShieldLearn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            padding: 30px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #1e293b;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Shield logo */
+        .shield-logo-small {
+            position: absolute;
+            top: 37px;
+            right: 45px;
+        }
+
+        .shield-logo-small img {
+            width: 70px;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Main Container */
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        /* Scrollbar Styling */
+        .container::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: rgba(226, 232, 240, 0.5);
+            border-radius: 10px;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 10px;
+        }
+
+        .container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #1e293b;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #e2e8f0;
+            font-weight: bold;
+        }
+
+        .category {
+            margin-bottom: 40px;
+        }
+
+        .category-header {
+            font-size: 20px;
+            color: #475569;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-icon {
+            font-size: 24px;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .module-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 18px;
+            padding: 30px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+        }
+
+        .module-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .module-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .module-description {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .module-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            color: #1e40af;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .module-badge.beginner {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            color: #15803d;
+        }
+
+        .module-badge.intermediate {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+        }
+
+        .module-badge.advanced {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+
+        .empty-state-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .container {
+                padding: 25px;
+                max-height: calc(100vh - 240px);
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <button class="back-button" onclick="location.href='dash.html'">← Back to Dashboard</button>
+        <h1>All Available Modules</h1>
+
+    <div class="shield-logo-small">
+        <img src="images/logo.png" alt="logo">
+    </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- General Modules -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">🔐</span>
+                <span>General Modules</span>
+            </div>
+            <div class="modules-grid">
+                <div class="module-card" onclick="location.href='modules/gm1.html'">
+                    <div class="module-icon">🛡️</div>
+                    <div class="module-title">Intro to Staying Safe</div>
+                    <div class="module-description">Essential cybersecurity basics to protect yourself online and understand common threats.</div>
+                    <span class="module-badge beginner">Beginner</span>
+                </div>
+
+                <div class="module-card" onclick="location.href='modules/gm2.html'">
+                    <div class="module-icon">🔑</div>
+                    <div class="module-title">Password on Lock!</div>
+                    <div class="module-description">Learn how to create strong, secure passwords and protect your accounts from unauthorized access.</div>
+                    <span class="module-badge beginner">Beginner</span>
+                </div>
+
+                <div class="module-card" onclick="location.href='modules/gm3.html'">
+                    <div class="module-icon">🔐</div>
+                    <div class="module-title">Password on Lock 2</div>
+                    <div class="module-description">Advanced password security techniques including password managers and two-factor authentication.</div>
+                    <span class="module-badge intermediate">Intermediate</span>
+                </div>
+
+                <div class="module-card" onclick="location.href='modules/gm4.html'">
+                    <div class="module-icon">🎣</div>
+                    <div class="module-title">Shield against Phishers</div>
+                    <div class="module-description">Identify and avoid phishing attacks, suspicious emails, and fraudulent websites.</div>
+                    <span class="module-badge beginner">Beginner</span>
+                </div>
+
+                <div class="module-card" onclick="location.href='modules/gm5.html'">
+                    <div class="module-icon">🪝</div>
+                    <div class="module-title">No more Baiting</div>
+                    <div class="module-description">Protect yourself from baiting attacks and social engineering tactics used by cybercriminals.</div>
+                    <span class="module-badge intermediate">Intermediate</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Modules -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">🎓</span>
+                <span>Student-Focused Modules</span>
+            </div>
+            <div class="modules-grid">
+                <div class="module-card" onclick="location.href='modules/s1.html'">
+                    <div class="module-icon">📞</div>
+                    <div class="module-title">Ring Ring... Is It a Scam?</div>
+                    <div class="module-description">Learn to identify phone scams, vishing attacks, and fraudulent calls targeting students.</div>
+                    <span class="module-badge beginner">Beginner</span>
+                </div>
+
+                <div class="module-card" onclick="location.href='modules/s2.html'">
+                    <div class="module-icon">📱</div>
+                    <div class="module-title">Scroll Smart: Protecting Yourself Online</div>
+                    <div class="module-description">Stay safe on social media, protect your personal information, and navigate online spaces securely.</div>
+                    <span class="module-badge beginner">Beginner</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Modules -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">🏥</span>
+                <span>Healthcare Professional Modules</span>
+            </div>
+            <div class="modules-grid">
+                <div class="module-card" onclick="location.href='modules/p1.html'">
+                    <div class="module-icon">⚕️</div>
+                    <div class="module-title">Human Hacking in Healthcare</div>
+                    <div class="module-description">Understand social engineering tactics targeting healthcare workers and how to protect patient data.</div>
+                    <span class="module-badge advanced">Advanced</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coming Soon Section -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">🚀</span>
+                <span>Coming Soon</span>
+            </div>
+                <div class="module-card" onclick="alert('Still under development. Check back soon!')">
+                    <div class="module-icon">?</div>
+                    <div class="module-title">Trust Is the Target: Social Engineering in Admin</div>
+                    <div class="module-description">How to not give your company up to hackers as an Admin </div>
+                    <span class="module-badge intermediate">Intermediate</span>
+                </div>
+                
+            
+            <div class="empty-state">
+                <div class="empty-state-icon">🔜</div>
+                <p><strong>More modules are on the way!</strong></p>
+                <p>Check back soon for new cybersecurity training modules.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Add smooth scroll behavior
+        document.querySelector('.container').style.scrollBehavior = 'smooth';
+
+        // to add in backend Track module clicks
+        document.querySelectorAll('.module-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('.module-title').textContent;
+                console.log('Module selected:', title);
+                //save this to localStorage or send analytics
+            });
+        });
+    </script>
+
+</body>
+</html>

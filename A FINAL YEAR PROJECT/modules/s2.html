@@ -1,0 +1,894 @@
+<!-- scroll smart  -->
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scroll Smart: Protecting Yourself Online - ShieldLearn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            padding: 20px;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .module-title {
+            font-size: 28px;
+            color: #1e293b;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .logo {
+            position: absolute;
+            right: 0;
+            width: 80px;
+            height: 70px;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 14px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        /* ===== MAIN GAME CONTAINER ===== */
+        .game-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* ===== SCORE DISPLAY ===== */
+        .score-display {
+            text-align: center;
+            font-size: 18px;
+            color: #475569;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .score-number {
+            color: #8b5cf6;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* ===== PHONE MOCKUP ===== */
+        /* Simulates a smartphone interface for social media scenarios */
+        .phone-mockup {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 35px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .phone-notch {
+            width: 120px;
+            height: 25px;
+            background: #0f172a;
+            border-radius: 0 0 15px 15px;
+            margin: 0 auto 10px;
+        }
+
+        .phone-screen {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        /* ===== SOCIAL MEDIA POST STYLES ===== */
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .post-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-username {
+            font-weight: bold;
+            color: #1e293b;
+            font-size: 15px;
+        }
+
+        .post-time {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .post-content {
+            margin-bottom: 15px;
+            color: #1e293b;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* ===== DIRECT MESSAGE (DM) STYLE ===== */
+        .dm-container {
+            background: #f1f5f9;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .dm-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .dm-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .dm-sender {
+            font-weight: bold;
+            font-size: 14px;
+            color: #1e293b;
+        }
+
+        .dm-message {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        /* ===== PROFILE STYLE ===== */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 10px;
+        }
+
+        .profile-username {
+            font-weight: bold;
+            font-size: 18px;
+            color: #1e293b;
+        }
+
+        .profile-bio {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* ===== QUESTION SECTION ===== */
+        .question-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .question-title {
+            font-size: 18px;
+            color: #1e293b;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* ===== ACTION BUTTONS - NEUTRAL COLOR ===== */
+        /* Both buttons use neutral gray border to avoid influencing user decisions */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            padding: 20px;
+            border: 3px solid #e2e8f0; /* Neutral gray - no color bias */
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: #1e293b;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: #cbd5e1; /* Slight hover effect, still neutral */
+        }
+
+        .action-icon {
+            font-size: 32px;
+        }
+
+        /* Green background when safe option is selected */
+        .action-btn.selected.safe {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-color: #16a34a;
+        }
+
+        /* Red background when risky option is selected */
+        .action-btn.selected.danger {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #dc2626;
+        }
+
+        /* ===== FEEDBACK SECTION ===== */
+        .feedback {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        /* Correct answer feedback styling */
+        .feedback.correct {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-left: 5px solid #22c55e;
+        }
+
+        /* Incorrect answer feedback styling */
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 5px solid #ef4444;
+        }
+
+        .feedback-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feedback.correct .feedback-title {
+            color: #15803d;
+        }
+
+        .feedback.incorrect .feedback-title {
+            color: #991b1b;
+        }
+
+        .feedback-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1e293b;
+        }
+
+        /* ===== SAFETY TIPS BOX ===== */
+        /* Educational insights after each scenario */
+        .tips-box {
+            background: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid #8b5cf6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .tips-title {
+            font-weight: bold;
+            color: #7c3aed;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-list li {
+            padding: 5px 0;
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .tips-list li::before {
+            content: '💡 ';
+            margin-right: 8px;
+        }
+
+        /* ===== NAVIGATION BUTTONS ===== */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .module-title {
+                font-size: 20px;
+            }
+
+            .game-container {
+                padding: 25px;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1 class="module-title">Scroll Smart: Protecting Yourself Online</h1>
+        <img src="../images/logo.png" class="logo" alt="ShieldLearn Logo">
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-info">
+            <span>Scenario <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></span>
+            <span id="progressPercentage">10%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        
+        <div class="score-display">
+            Smart Decisions: <span class="score-number" id="scoreDisplay">0/10</span>
+        </div>
+
+        <!-- Phone Mockup -->
+        <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="phone-screen" id="phoneScreen"></div>
+        </div>
+
+        <!-- Question Section -->
+        <div class="question-section">
+            <div class="question-title" id="questionTitle"></div>
+            <div class="action-buttons" id="actionButtons"></div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback" id="feedback">
+            <div class="feedback-title" id="feedbackTitle"></div>
+            <div class="feedback-text" id="feedbackText"></div>
+            <div class="tips-box" id="tipsBox"></div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="button-container">
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Scenario →</button>
+        </div>
+    </div>
+
+    <script>
+        const scenarios = [
+            {
+                id: 1,
+                type: "post",
+                content: {
+                    username: "TravelBlogger_Sarah",
+                    avatar: "✈️",
+                    time: "2h ago",
+                    text: "Just posted my new blog! Amazing 2-week trip to Bali 🌴 Click this link to read about my journey and get travel tips!",
+                    image: "🏝️",
+                    link: "travelsara.click/bali-trip-2024"
+                },
+                question: "Should you click on this link?",
+                correctAction: "refuse",
+                tips: [
+                    "Shortened or suspicious URLs can lead to phishing sites",
+                    "Always verify links before clicking, especially from unfamiliar sources",
+                    "Check if the domain matches the expected website"
+                ],
+                explanation: "Always be cautious with links from people you don't know personally. Even if an account looks legitimate, it could be compromised. Hover over links to see the full URL, and if unsure, search for the content separately."
+            },
+            {
+                id: 2,
+                type: "dm",
+                content: {
+                    sender: "University_Admin",
+                    avatar: "🎓",
+                    message: "URGENT: Your student account will be suspended unless you verify your details immediately. Click here: uni-verify-portal.com/confirm"
+                },
+                question: "Is this message legitimate?",
+                correctAction: "refuse",
+                tips: [
+                    "Universities don't send urgent DMs asking for verification",
+                    "Check the sender's profile - is it verified? Does it match official accounts?",
+                    "Contact your university directly through official channels"
+                ],
+                explanation: "This is a classic phishing attempt. Real university communications come through official emails or student portals. Scammers create urgency to make you act without thinking. Always verify through official channels."
+            },
+            {
+                id: 3,
+                type: "post",
+                content: {
+                    username: "Your_Best_Friend",
+                    avatar: "😊",
+                    time: "Just now",
+                    text: "Hey everyone! Check out this personality quiz that tells you which Harry Potter character you are! It's super accurate 😂",
+                    image: "🧙",
+                    link: "personality-quiz-fun.net"
+                },
+                question: "Should you take this quiz?",
+                correctAction: "refuse",
+                tips: [
+                    "Many 'fun' quizzes collect personal data",
+                    "They often ask for access to your profile information",
+                    "Your answers can reveal security question answers"
+                ],
+                explanation: "These quizzes often harvest personal information. They might ask your mother's maiden name, first pet, or birthplace - common security questions. Even if shared by friends, be cautious as their account could be compromised."
+            },
+            {
+                id: 4,
+                type: "profile",
+                content: {
+                    username: "john_student_2024",
+                    avatar: "👤",
+                    bio: "Hi! I'm John, studying Computer Science at Manchester University. Love gaming 🎮 and football ⚽. Birthday: March 15, 2003. Phone: 07XXX XXXXXX. Always up for meeting new people!"
+                },
+                question: "Is this profile bio safe?",
+                correctAction: "refuse",
+                tips: [
+                    "Never share your full birthdate publicly",
+                    "Phone numbers should be kept private",
+                    "Personal details can be used for identity theft or social engineering"
+                ],
+                explanation: "This profile shares way too much personal information. Birthdates, phone numbers, and specific location details can be used for identity theft, scams, or stalking. Keep your bio general and fun, not a data goldmine!"
+            },
+            {
+                id: 5,
+                type: "dm",
+                content: {
+                    sender: "Student_Society_2024",
+                    avatar: "🎭",
+                    message: "Hi! We're the Drama Society and we're hosting auditions next Tuesday at 6pm in the Student Union Theatre. Would you like more info? You can also check our official Instagram @ManDramaSoc"
+                },
+                question: "Is this a safe interaction?",
+                correctAction: "comply",
+                tips: [
+                    "Provides specific, verifiable information (time, location)",
+                    "References an official social media account you can verify",
+                    "No suspicious links or requests for personal information"
+                ],
+                explanation: "This is a legitimate-looking message. It provides specific details you can verify, mentions an official account, and doesn't ask for personal info or money. You can always verify by checking the official student society account!"
+            },
+            {
+                id: 6,
+                type: "post",
+                content: {
+                    username: "Campus_Roommate_Finder",
+                    avatar: "🏠",
+                    time: "5h ago",
+                    text: "Looking for roommates for next year? Fill out our form with your budget, preferences, and contact details. We'll match you with compatible students!",
+                    image: "📋",
+                    link: "roommate-match.info/signup"
+                },
+                question: "Should you fill out this form?",
+                correctAction: "refuse",
+                tips: [
+                    "Only use official university housing services",
+                    "Unofficial 'matching' services may misuse your data",
+                    "Verify any housing service with your university's accommodation office"
+                ],
+                explanation: "Never share personal information with unverified third-party services. Use your university's official accommodation services or verified student housing platforms. Your personal and financial data could be at risk."
+            },
+            {
+                id: 7,
+                type: "post",
+                content: {
+                    username: "YourClassmate_Mike",
+                    avatar: "📚",
+                    time: "30m ago",
+                    text: "Hey class! I created a shared Google Drive folder for our group project. Here's the link if you want to add your notes: drive.google.com/CS101-Project",
+                    image: "💻"
+                },
+                question: "Is this safe to access?",
+                correctAction: "comply",
+                tips: [
+                    "Google Drive is a legitimate, secure platform",
+                    "The URL is from an official Google domain",
+                    "Sharing study materials is common and helpful"
+                ],
+                explanation: "This is a legitimate use of a trusted platform. The URL is clearly from Google Drive's official domain. Collaborating on schoolwork using verified platforms like Google Drive, OneDrive, or Dropbox is safe and encouraged!"
+            },
+            {
+                id: 8,
+                type: "dm",
+                content: {
+                    sender: "Hot_Singles_Near_You",
+                    avatar: "💋",
+                    message: "Hey cutie 😘 I saw your profile and thought you were really attractive. Want to chat? Click here to see my private photos: bit.ly/xxxxx"
+                },
+                question: "Should you respond or click the link?",
+                correctAction: "refuse",
+                tips: [
+                    "This is a classic catfishing/scam attempt",
+                    "Never click links from strangers promising romantic content",
+                    "Report and block these accounts immediately"
+                ],
+                explanation: "PThis is an obvious scam or malicious attempt. These messages often lead to malware, phishing sites, or attempts to extort money. Block, report, and never engage with these kinds of messages."
+            },
+            {
+                id: 9,
+                type: "post",
+                content: {
+                    username: "Student_Union_Official",
+                    avatar: "🎓",
+                    time: "1d ago",
+                    text: "Reminder: Our mental health support drop-in sessions are every Wednesday 2-4pm in Room 301, Student Services Building. No appointment needed. All conversations are confidential. 💚",
+                    image: "🧠"
+                },
+                question: "Is this a trustworthy post?",
+                correctAction: "comply",
+                tips: [
+                    "Official student union accounts are verified",
+                    "Provides specific campus locations and times",
+                    "Promotes legitimate student services"
+                ],
+                explanation: "This is legitimate information from an official source. Student unions regularly post about campus services and support. Always verify the account is official (check for verification badges and compare with the university website)."
+            },
+            {
+                id: 10,
+                type: "profile",
+                content: {
+                    username: "emma_fitness_life",
+                    avatar: "💪",
+                    bio: "Fitness enthusiast 🏃‍♀️ | Manchester Uni Student | Love coffee ☕ and hiking 🥾 | DM for workout tips!"
+                },
+                question: "Is this an appropriate profile bio?",
+                correctAction: "comply",
+                tips: [
+                    "Shares interests without revealing sensitive information",
+                    "General location (university) without specific details",
+                    "No birthdate, phone number, or other personal identifiers"
+                ],
+                explanation: "GThis bio strikes a good balance. It shares personality and interests without revealing sensitive information. It mentions the university generally but no specific address, no birthdate, and no contact details. This is how to be social and safe!"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function displayQuestion() {
+            const scenario = scenarios[currentQuestionIndex];
+            answered = false;
+
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = scenarios.length;
+
+            const progress = ((currentQuestionIndex + 1) / scenarios.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressPercentage').textContent = Math.round(progress) + '%';
+
+            renderPhoneContent(scenario);
+            document.getElementById('questionTitle').textContent = scenario.question;
+            renderActions();
+
+            document.getElementById('feedback').classList.remove('show', 'correct', 'incorrect');
+            document.getElementById('nextBtn').disabled = true;
+
+            if (currentQuestionIndex === scenarios.length - 1) {
+                document.getElementById('nextBtn').textContent = 'Finish';
+                document.getElementById('nextBtn').classList.remove('btn-primary');
+                document.getElementById('nextBtn').classList.add('btn-success');
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next Scenario →';
+                document.getElementById('nextBtn').classList.add('btn-primary');
+                document.getElementById('nextBtn').classList.remove('btn-success');
+            }
+        }
+
+        function renderPhoneContent(scenario) {
+            const screen = document.getElementById('phoneScreen');
+            
+            if (scenario.type === 'post') {
+                screen.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-avatar">${scenario.content.avatar}</div>
+                        <div class="post-info">
+                            <div class="post-username">${scenario.content.username}</div>
+                            <div class="post-time">${scenario.content.time}</div>
+                        </div>
+                    </div>
+                    <div class="post-content">${scenario.content.text}</div>
+                    ${scenario.content.image ? `<div class="post-image">${scenario.content.image}</div>` : ''}
+                    <div class="post-actions">
+                        <div class="post-action">❤️ Like</div>
+                        <div class="post-action">💬 Comment</div>
+                        <div class="post-action">↗️ Share</div>
+                    </div>
+                `;
+            } else if (scenario.type === 'dm') {
+                screen.innerHTML = `
+                    <div class="dm-container">
+                        <div class="dm-header">
+                            <div class="dm-avatar">${scenario.content.avatar}</div>
+                            <div class="dm-sender">${scenario.content.sender}</div>
+                        </div>
+                        <div class="dm-message">${scenario.content.message}</div>
+                    </div>
+                `;
+            } else if (scenario.type === 'profile') {
+                screen.innerHTML = `
+                    <div class="profile-header">
+                        <div class="profile-avatar-large">${scenario.content.avatar}</div>
+                        <div class="profile-username">${scenario.content.username}</div>
+                        <div class="profile-bio">${scenario.content.bio}</div>
+                    </div>
+                `;
+            }
+        }
+
+        function renderActions() {
+            const container = document.getElementById('actionButtons');
+            container.innerHTML = `
+                <div class="action-btn safe" onclick="selectAction('comply')">
+                    <span class="action-icon">✅</span>
+                    <span>Safe / Accept</span>
+                </div>
+                <div class="action-btn danger" onclick="selectAction('refuse')">
+                    <span class="action-icon">❌</span>
+                    <span>Risky / Decline</span>
+                </div>
+            `;
+        }
+
+        function selectAction(action) {
+            if (answered) return;
+
+            const buttons = document.querySelectorAll('.action-btn');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+
+            event.currentTarget.classList.add('selected');
+
+            document.getElementById('nextBtn').disabled = false;
+            checkAnswer(action);
+        }
+
+        function checkAnswer(action) {
+            const scenario = scenarios[currentQuestionIndex];
+            const feedback = document.getElementById('feedback');
+            const feedbackTitle = document.getElementById('feedbackTitle');
+            const feedbackText = document.getElementById('feedbackText');
+            const tipsBox = document.getElementById('tipsBox');
+
+            answered = true;
+
+            if (action === scenario.correctAction) {
+                score++;
+                feedback.classList.add('correct');
+                feedbackTitle.textContent = '✅ Spot On! Great Job!';
+                feedbackText.textContent = scenario.explanation;
+            } else {
+                feedback.classList.add('incorrect');
+                feedbackTitle.textContent = '❌ Not Quite Right!';
+                
+                if (scenario.correctAction === 'refuse') {
+                    feedbackText.textContent = 'This was actually risky! ' + scenario.explanation;
+                } else {
+                    feedbackText.textContent = 'This was actually safe! ' + scenario.explanation;
+                }
+            }
+
+            tipsBox.innerHTML = `
+                <div class="tips-title">💡 Safety Tips:</div>
+                <ul class="tips-list">
+                    ${scenario.tips.map(tip => `<li>${tip}</li>`).join('')}
+                </ul>
+            `;
+
+            feedback.classList.add('show');
+            document.getElementById('scoreDisplay').textContent = `${score}/${scenarios.length}`;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex === scenarios.length - 1) {
+                const moduleName = 'Scroll Smart: Protecting Yourself Online';
+                const badgeName = 'Social Media Savvy';
+
+                localStorage.setItem('moduleScore', score);
+                localStorage.setItem('moduleName', moduleName);
+                localStorage.setItem('badgeName', badgeName);
+
+                window.location.href = `complete.html?module=${encodeURIComponent(moduleName)}&score=${score}&total=${scenarios.length}&badge=${encodeURIComponent(badgeName)}&passing=0.7`;
+                return;
+            }
+
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        displayQuestion();
+    </script>
+
+</body>
+</html>

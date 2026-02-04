@@ -1,0 +1,730 @@
+<!-- Ring Ring is it a scam -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ring Ring... Is It a Scam? - ShieldLearn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .module-title {
+            font-size: 28px;
+            color: #1e293b;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .logo {
+            position: absolute;
+            right: 0;
+            width: 80px;
+            height: 70px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 14px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        /* Question Container */
+        .question-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question-number {
+            color: #3b82f6;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 22px;
+            color: #1e293b;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .options-container {
+            flex: 1;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px 25px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option:hover {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        }
+
+        .option.correct {
+            border-color: #22c55e;
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+        }
+
+        .option.incorrect {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+
+        .option-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .option.selected .option-checkbox {
+            background: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .option.selected .option-checkbox::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .explanation-title {
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .explanation-text {
+            color: #78350f;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+        }
+
+        .score-display {
+            font-size: 16px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .module-title {
+                font-size: 20px;
+            }
+
+            .question-container {
+                padding: 25px;
+            }
+
+            .question-text {
+                font-size: 18px;
+            }
+
+            .option {
+                padding: 15px 20px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1 class="module-title">Ring Ring... Is It a Scam?</h1>
+        <img src="../images/logo.png" class="logo" alt="ShieldLearn Logo">
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-info">
+            <span>Question <span id="currentQuestion">1</span> of <span id="totalQuestions">20</span></span>
+            <span id="progressPercentage">5%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- Question Container -->
+    <div class="question-container">
+        <div class="question-number" id="questionNumber">Question 1</div>
+        <div class="question-text" id="questionText"></div>
+        
+        <div class="options-container" id="optionsContainer"></div>
+        
+        <div class="explanation" id="explanation">
+            <div class="explanation-title">💡 Explanation</div>
+            <div class="explanation-text" id="explanationText"></div>
+        </div>
+
+        <div class="button-container">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+            <div class="score-display" id="scoreDisplay">Score: 0/20</div>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next →</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+  {
+    "id": 1,
+    "type": "multiple-choice",
+    "question": "What is the main goal of most scam phone calls?",
+    "options": [
+      "To provide customer support",
+      "To collect personal or financial information",
+      "To advertise products",
+      "To conduct surveys"
+    ],
+    "correctAnswer": "To collect personal or financial information",
+    "explanation": "Scam callers usually aim to steal money, passwords, or personal data."
+  },
+  {
+    "id": 2,
+    "type": "true-false",
+    "question": "A legitimate organisation will always pressure you to act immediately over the phone.",
+    "correctAnswer": false,
+    "explanation": "Scammers create urgency. Legitimate organisations give you time to verify."
+  },
+  {
+    "id": 3,
+    "type": "multiple-choice",
+    "question": "Which phone number is MOST likely to be a scam?",
+    "options": [
+      "A saved contact from your phone",
+      "A number claiming to be your bank but unknown",
+      "A number from a friend",
+      "A university helpline number"
+    ],
+    "correctAnswer": "A number claiming to be your bank but unknown",
+    "explanation": "Banks rarely call unexpectedly and ask for information."
+  },
+  {
+    "id": 4,
+    "type": "select-all",
+    "question": "Which of the following are common scam call warning signs?",
+    "options": [
+      "Urgent threats",
+      "Requests for passwords",
+      "Caller asks you to verify information",
+      "Caller allows you to hang up and call back"
+    ],
+    "correctAnswer": [
+      "Urgent threats",
+      "Requests for passwords"
+    ],
+    "explanation": "Scammers rush you and ask for sensitive data."
+  },
+  {
+    "id": 5,
+    "type": "scenario",
+    "question": "You receive a call saying your student loan will be cancelled unless you confirm your details now. What should you do?",
+    "options": [
+      "Give the details to avoid problems",
+      "Hang up and verify using an official website",
+      "Ask the caller to email you",
+      "Stay on the call until it ends"
+    ],
+    "correctAnswer": "Hang up and verify using an official website",
+    "explanation": "Always verify claims independently using trusted sources."
+  },
+  {
+    "id": 6,
+    "type": "true-false",
+    "question": "Caller ID can be spoofed to look like a trusted number.",
+    "correctAnswer": true,
+    "explanation": "Scammers can fake caller ID to appear legitimate."
+  },
+  {
+    "id": 7,
+    "type": "multiple-choice",
+    "question": "What should you NEVER share during a phone call?",
+    "options": [
+      "Your name",
+      "Your password",
+      "Your university name",
+      "Your course"
+    ],
+    "correctAnswer": "Your password",
+    "explanation": "Passwords should never be shared with anyone."
+  },
+  {
+    "id": 8,
+    "type": "scenario",
+    "question": "A caller claims to be from IT support and asks you to install software. What is the safest response?",
+    "options": [
+      "Install it immediately",
+      "Ask them to call later",
+      "Refuse and report the call",
+      "Share your device details"
+    ],
+    "correctAnswer": "Refuse and report the call",
+    "explanation": "Installing software on request is a major red flag."
+  },
+  {
+    "id": 9,
+    "type": "multiple-choice",
+    "question": "Which emotion do scammers most commonly exploit?",
+    "options": [
+      "Curiosity",
+      "Fear",
+      "Excitement",
+      "Boredom"
+    ],
+    "correctAnswer": "Fear",
+    "explanation": "Fear and urgency stop people from thinking critically."
+  },
+  {
+    "id": 10,
+    "type": "true-false",
+    "question": "Scam calls only target older people.",
+    "correctAnswer": false,
+    "explanation": "Students are common targets due to loans, jobs, and limited experience."
+  },
+  {
+    "id": 11,
+    "type": "select-all",
+    "question": "Which actions help protect you from scam calls?",
+    "options": [
+      "Letting unknown calls go to voicemail",
+      "Sharing verification codes",
+      "Using call-blocking features",
+      "Checking official contact details"
+    ],
+    "correctAnswer": [
+      "Letting unknown calls go to voicemail",
+      "Using call-blocking features",
+      "Checking official contact details"
+    ],
+    "explanation": "These actions reduce risk and allow verification."
+  },
+  {
+    "id": 12,
+    "type": "multiple-choice",
+    "question": "If a call sounds suspicious, what is the BEST immediate action?",
+    "options": [
+      "Argue with the caller",
+      "Hang up",
+      "Give fake details",
+      "Stay silent"
+    ],
+    "correctAnswer": "Hang up",
+    "explanation": "Ending the call immediately is the safest option."
+  },
+  {
+    "id": 13,
+    "type": "scenario",
+    "question": "A caller says they accidentally sent you money and want it back. What should you do?",
+    "options": [
+      "Send the money back",
+      "Give them your bank details",
+      "Contact your bank directly",
+      "Ignore it completely"
+    ],
+    "correctAnswer": "Contact your bank directly",
+    "explanation": "This is a common refund scam."
+  },
+  {
+    "id": 14,
+    "type": "true-false",
+    "question": "Legitimate organisations will ask for one-time passcodes over the phone.",
+    "correctAnswer": false,
+    "explanation": "One-time passcodes should never be shared."
+  },
+  {
+    "id": 15,
+    "type": "multiple-choice",
+    "question": "What does 'vishing' mean?",
+    "options": [
+      "Email scams",
+      "Text message scams",
+      "Voice-based scams",
+      "Social media scams"
+    ],
+    "correctAnswer": "Voice-based scams",
+    "explanation": "Vishing = voice phishing."
+  },
+  {
+    "id": 16,
+    "type": "scenario",
+    "question": "A caller claims to be from your university and asks for your login details. What is the correct response?",
+    "options": [
+      "Provide details",
+      "Ask for their name and comply",
+      "Hang up and contact the university directly",
+      "Ignore the call forever"
+    ],
+    "correctAnswer": "Hang up and contact the university directly",
+    "explanation": "Universities never ask for passwords over the phone."
+  },
+  {
+    "id": 17,
+    "type": "multiple-choice",
+    "question": "Which payment method do scammers often request?",
+    "options": [
+      "Bank transfer",
+      "Gift cards",
+      "Cash in person",
+      "Cheque"
+    ],
+    "correctAnswer": "Gift cards",
+    "explanation": "Gift cards are hard to trace and commonly used in scams."
+  },
+  {
+    "id": 18,
+    "type": "true-false",
+    "question": "You should report scam calls even if you did not lose money.",
+    "correctAnswer": true,
+    "explanation": "Reporting helps protect others."
+  },
+  {
+    "id": 19,
+    "type": "select-all",
+    "question": "Which information can scammers use to impersonate you?",
+    "options": [
+      "Full name",
+      "Date of birth",
+      "Student ID",
+      "Favourite colour"
+    ],
+    "correctAnswer": [
+      "Full name",
+      "Date of birth",
+      "Student ID"
+    ],
+    "explanation": "Personal identifiers help scammers build trust."
+  },
+  {
+    "id": 20,
+    "type": "multiple-choice",
+    "question": "What is the safest mindset when receiving unexpected calls?",
+    "options": [
+      "Trust first",
+      "Stay polite and comply",
+      "Assume it could be a scam",
+      "Provide minimal details"
+    ],
+    "correctAnswer": "Assume it could be a scam",
+    "explanation": "Healthy scepticism keeps you safe."
+  }
+];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+        let answered = false;
+
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            answered = false;
+            
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestionIndex + 1}`;
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = questions.length;
+            
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressPercentage').textContent = Math.round(progress) + '%';
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            if (question.type === 'true-false') {
+                renderOptions(['True', 'False'], question.type);
+            } else {
+                renderOptions(question.options, question.type);
+            }
+            
+            document.getElementById('explanation').classList.remove('show');
+            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('prevBtn').style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                document.getElementById('nextBtn').textContent = 'Finish';
+                document.getElementById('nextBtn').classList.remove('btn-primary');
+                document.getElementById('nextBtn').classList.add('btn-success');
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next →';
+                document.getElementById('nextBtn').classList.add('btn-primary');
+                document.getElementById('nextBtn').classList.remove('btn-success');
+            }
+        }
+
+        function renderOptions(options, type) {
+            const container = document.getElementById('optionsContainer');
+            
+            options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.innerHTML = `
+                    <div class="option-checkbox"></div>
+                    <span>${option}</span>
+                `;
+                
+                optionDiv.addEventListener('click', () => selectOption(optionDiv, option, type));
+                container.appendChild(optionDiv);
+            });
+        }
+
+        function selectOption(element, value, type) {
+            if (answered) return;
+            
+            const question = questions[currentQuestionIndex];
+            
+            if (type === 'select-all') {
+                element.classList.toggle('selected');
+                
+                const selectedOptions = Array.from(document.querySelectorAll('.option.selected'))
+                    .map(opt => opt.querySelector('span').textContent);
+                
+                document.getElementById('nextBtn').disabled = selectedOptions.length === 0;
+            } else {
+                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                element.classList.add('selected');
+                document.getElementById('nextBtn').disabled = false;
+            }
+        }
+
+        function checkAnswer() {
+            const question = questions[currentQuestionIndex];
+            const selectedOptions = Array.from(document.querySelectorAll('.option.selected'));
+            
+            let isCorrect = false;
+            
+            if (question.type === 'true-false') {
+                const selected = selectedOptions[0]?.querySelector('span').textContent;
+                const answer = selected === 'True' ? true : false;
+                isCorrect = answer === question.correctAnswer;
+            } else if (question.type === 'select-all') {
+                const selected = selectedOptions.map(opt => opt.querySelector('span').textContent);
+                isCorrect = JSON.stringify(selected.sort()) === JSON.stringify(question.correctAnswer.sort());
+            } else {
+                const selected = selectedOptions[0]?.querySelector('span').textContent;
+                isCorrect = selected === question.correctAnswer;
+            }
+            
+            if (isCorrect) {
+                score++;
+                selectedOptions.forEach(opt => opt.classList.add('correct'));
+            } else {
+                selectedOptions.forEach(opt => opt.classList.add('incorrect'));
+            }
+            
+            document.getElementById('explanationText').textContent = question.explanation;
+            document.getElementById('explanation').classList.add('show');
+            document.getElementById('scoreDisplay').textContent = `Score: ${score}/${questions.length}`;
+            
+            answered = true;
+        }
+
+        function nextQuestion() {
+            if (!answered) {
+                checkAnswer();
+                return;
+            }
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                // Save score and redirect to completion page
+                const moduleName = 'Ring Ring... Is It a Scam?';
+                const badgeName = 'Phone Scam Detective';
+                
+                window.location.href = `complete.html?module=${encodeURIComponent(moduleName)}&score=${score}&total=${questions.length}&badge=${encodeURIComponent(badgeName)}&passing=0.7`;
+                return;
+            }
+            
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        displayQuestion();
+    </script>
+
+</body>
+</html>

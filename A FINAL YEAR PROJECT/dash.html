@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ShieldLearn Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            padding: 30px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #1e293b;
+            font-weight: bold;
+        }
+
+        /* Shield logo */
+        .shield-logo-small {
+            position: absolute;
+            top: 37px;
+            right: 45px;
+        }
+
+        .shield-logo-small img {
+            width: 70px;
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
+            gap: 25px;
+            min-height: calc(100vh - 180px);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* Left Menu */
+        .left-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            color: #1e293b;
+        }
+
+        .menu-btn:hover {
+            background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #475569;
+        }
+
+        /* Current Modules */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            flex: 1;
+        }
+
+        .module-box {
+            background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+            border-radius: 18px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .module-box:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+        }
+
+        .module-box.default-module {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+        }
+
+        .module-box.default-module:hover {
+            background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 100%);
+        }
+
+        /* Achievements */
+        .achievements-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stars {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .star-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .star {
+            font-size: 70px;
+            color: rgba(234, 179, 8, 0.3);
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            transition: all 0.3s ease;
+        }
+
+        .star.earned {
+            color: #fbbf24;
+            animation: starPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .star-label {
+            font-size: 11px;
+            color: #64748b;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .achievement-text {
+            font-size: 14px;
+            text-align: center;
+            color: #475569;
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%);
+            width: 0%;
+            transition: width 1s ease;
+            border-radius: 10px;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        /* Recent Activity */
+        .activity-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .activity-item {
+            background: #f8fafc;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #475569;
+            border-left: 4px solid #3b82f6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .modules-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .modules-grid,
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1 id="welcomeText">Welcome!</h1>
+    </div>
+
+    <div class="shield-logo-small">
+        <img src="images/logo.png" alt="logo">
+    </div>
+    
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+
+        <!-- Left Column - Navigation -->
+        <div class="left-menu">
+            <div class="menu-btn" onclick="location.href='modulelist.html'">📚 All Modules</div>
+            <div class="menu-btn" onclick="location.href='forum.html'">📊 Online Forum</div>
+            <div class="menu-btn" onclick="location.href='settings.html'">⚙️ Settings</div>
+            <div class="menu-btn" onclick="alert('Chat with AL!')">💬 Ask AL</div>
+        </div>
+
+        <!-- Middle Column - Current Modules -->
+        <div class="card">
+            <h2>My Current Modules</h2>
+            
+            <div class="quick-stats">
+                <div class="stat-box">
+                    <div class="stat-number" id="moduleCount">0</div>
+                    <div class="stat-label">Active Modules</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="completedCount">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+            </div>
+
+            <div class="modules-grid" id="modulesContainer"></div>
+
+            <div class="activity-section">
+                <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 12px;">Recent Activity</h3>
+                <div class="activity-item">🎯 Started "Password on Lock" module</div>
+                <div class="activity-item">✅ Completed quiz in "Intro to: Staying Safe"</div>
+                <div class="activity-item">⭐ Earned your first badge!</div>
+            </div>
+        </div>
+
+        <!-- Right Column - Achievements -->
+        <div class="card">
+            <div class="achievements-content">
+                <div>
+                    <h2>My Achievement Badges</h2>
+                    
+                    <div class="stars">
+                        <div class="star-container">
+                            <div class="star earned" id="star1">★</div>
+                            <div class="star-label">First Steps</div>
+                        </div>
+                        <div class="star-container">
+                            <div class="star" id="star2">★</div>
+                            <div class="star-label">Quick Learner</div>
+                        </div>
+                        <div class="star-container">
+                            <div class="star" id="star3">★</div>
+                            <div class="star-label">Security Pro</div>
+                        </div>
+                        <div class="star-container">
+                            <div class="star" id="star4">★</div>
+                            <div class="star-label">Master Shield</div>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">1 of 4 badges earned</div>
+
+                    <div class="achievement-text">
+                        Complete more modules to earn more stars and unlock special rewards! 🎉
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Welcome message
+        const firstName = "User"; //localStorage.getItem("firstName") || "User";
+        document.getElementById("welcomeText").innerText = `Welcome ${firstName}!`;
+
+        // Modules
+        const container = document.getElementById("modulesContainer");
+        const storedModules = null; // JSON.parse(localStorage.getItem("currentModules"));
+
+        const defaultModules = [
+            "Intro to: Staying Safe",
+            "Shield against Phishers",
+            "Password on Lock",
+            "No more Baiting!"
+        ];
+
+        const modulesToShow = (storedModules && storedModules.length > 0)
+            ? storedModules
+            : defaultModules;
+
+        // Update module count
+        document.getElementById("moduleCount").innerText = modulesToShow.length;
+        document.getElementById("completedCount").innerText = "1"; // T
+
+        modulesToShow.forEach(module => {
+            const div = document.createElement("div");
+            div.className = "module-box";
+
+            if (!storedModules || storedModules.length === 0) {
+                div.classList.add("default-module");
+            }
+
+            div.innerText = module;
+            div.onclick = () => location.href = "modulelist.html";
+            container.appendChild(div);
+        });
+
+        // Animate progress bar
+        setTimeout(() => {
+            document.getElementById("progressFill").style.width = "25%";
+        }, 500);
+
+        // Update progress text based on earned stars
+        const earnedStars = 1; // dynamic
+        document.getElementById("progressText").innerText = `${earnedStars} of 4 badges earned`;
+    </script>
+
+</body>
+</html>

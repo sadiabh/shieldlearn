@@ -1,0 +1,881 @@
+<!-- Human hacking in healthcare - PROFFESIONAL -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Human Hacking in Healthcare - ShieldLearn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 50%, #cffafe 100%);
+            padding: 20px;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .module-title {
+            font-size: 28px;
+            color: #0c4a6e;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .logo {
+            position: absolute;
+            right: 0;
+            width: 80px;
+            height: 80px;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #0284c7;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #0c4a6e;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 14px;
+            background: #e0f2fe;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0284c7 0%, #0369a1 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        /* ===== MAIN GAME CONTAINER ===== */
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ===== SCORE DISPLAY ===== */
+        .score-display {
+            text-align: center;
+            font-size: 18px;
+            color: #0c4a6e;
+            font-weight: 600;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            padding: 12px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .score-number {
+            color: #0284c7;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* ===== HOSPITAL ID BADGE ===== */
+        .hospital-badge {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border: 3px solid #0284c7;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.2);
+        }
+
+        .badge-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0f2fe;
+        }
+
+        .badge-photo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .badge-info {
+            flex: 1;
+        }
+
+        .badge-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0c4a6e;
+            margin-bottom: 5px;
+        }
+
+        .badge-role {
+            font-size: 14px;
+            color: #0369a1;
+            font-weight: 600;
+        }
+
+        .badge-id {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 3px;
+        }
+
+        .hospital-logo {
+            font-size: 28px;
+        }
+
+        /* ===== SCENARIO CONTEXT BOX ===== */
+        .scenario-context {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 5px solid #0284c7;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .scenario-label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #0369a1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .scenario-text {
+            font-size: 16px;
+            color: #0c4a6e;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        /* ===== INTERACTION DISPLAY ===== */
+        /* Shows email, phone call, or in-person interaction details */
+        .interaction-display {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 2px solid #e0f2fe;
+        }
+
+        .interaction-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f9ff;
+        }
+
+        .interaction-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 2px solid #fbbf24;
+        }
+
+        .interaction-from {
+            flex: 1;
+        }
+
+        .interaction-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0c4a6e;
+        }
+
+        .interaction-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 3px;
+        }
+
+        .interaction-content {
+            font-size: 15px;
+            color: #1e293b;
+            line-height: 1.7;
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 4px solid #0284c7;
+        }
+
+        /* ===== QUESTION SECTION ===== */
+        .question-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .question-title {
+            font-size: 19px;
+            color: #0c4a6e;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .question-subtitle {
+            font-size: 14px;
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* ===== ACTION BUTTONS - NEUTRAL COLOR ===== */
+        /* Both buttons use neutral gray border to avoid bias */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .action-btn {
+            padding: 25px 20px;
+            border: 3px solid #e2e8f0; /* Neutral gray - no color influence */
+            border-radius: 18px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: #0c4a6e;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.2);
+            border-color: #cbd5e1; /* Slight hover effect, still neutral */
+        }
+
+        .action-icon {
+            font-size: 40px;
+        }
+
+        .action-label {
+            font-size: 17px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .action-desc {
+            font-size: 13px;
+            color: #64748b;
+            text-align: center;
+        }
+
+        /* Green background when safe option is selected */
+        .action-btn.selected.safe {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+        }
+
+        /* Red background when danger option is selected */
+        .action-btn.selected.danger {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        /* ===== FEEDBACK SECTION ===== */
+        .feedback {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 25px;
+            display: none;
+            animation: slideIn 0.6s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        /* Correct answer feedback styling */
+        .feedback.correct {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 3px solid #22c55e;
+        }
+
+        /* Incorrect answer feedback styling */
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 3px solid #ef4444;
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .feedback-icon {
+            font-size: 48px;
+        }
+
+        .feedback-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .feedback.correct .feedback-title {
+            color: #15803d;
+        }
+
+        .feedback.incorrect .feedback-title {
+            color: #991b1b;
+        }
+
+        .feedback-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+
+        /* ===== CLINICAL INSIGHTS BOX ===== */
+        /* Professional security insights for healthcare workers */
+        .clinical-insight {
+            background: rgba(2, 132, 199, 0.1);
+            border-left: 4px solid #0284c7;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .clinical-insight-title {
+            font-weight: bold;
+            color: #0369a1;
+            margin-bottom: 12px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clinical-insight-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .clinical-insight-list li {
+            padding: 8px 0;
+            color: #0c4a6e;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .clinical-insight-list li::before {
+            content: '🏥 ';
+            margin-right: 10px;
+        }
+
+        /* ===== NAVIGATION BUTTONS ===== */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 17px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .module-title {
+                font-size: 22px;
+            }
+
+            .game-container {
+                padding: 25px;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .badge-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1 class="module-title">Human Hacking in Healthcare</h1>
+        <img src="images/logo.png" class="logo" alt="ShieldLearn Logo">
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-info">
+            <span>Clinical Scenario <span id="currentQuestion">1</span> of <span id="totalQuestions">8</span></span>
+            <span id="progressPercentage">12.5%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        
+        <div class="score-display">
+            Threats Identified: <span class="score-number" id="scoreDisplay">0/8</span>
+        </div>
+
+        <!-- Hospital Badge -->
+        <div class="hospital-badge">
+            <div class="badge-header">
+                <div class="badge-photo">⚕️</div>
+                <div class="badge-info">
+                    <div class="badge-name" id="staffName">Dr. Sarah Johnson</div>
+                    <div class="badge-role" id="staffRole">Senior Nurse Practitioner</div>
+                    <div class="badge-id">ID: NHS-87456 | Ward 4 - Cardiology</div>
+                </div>
+                <div class="hospital-logo">🏥</div>
+            </div>
+        </div>
+
+        <!-- Scenario Context -->
+        <div class="scenario-context">
+            <div class="scenario-label">⚡ SCENARIO</div>
+            <div class="scenario-text" id="scenarioText"></div>
+        </div>
+
+        <!-- Interaction Display -->
+        <div class="interaction-display" id="interactionDisplay"></div>
+
+        <!-- Question Section -->
+        <div class="question-section">
+            <div class="question-title" id="questionTitle"></div>
+            <div class="question-subtitle">Consider patient privacy, UK data laws, and hospital security protocols</div>
+            <div class="action-buttons" id="actionButtons"></div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback" id="feedback">
+            <div class="feedback-header">
+                <div class="feedback-icon" id="feedbackIcon"></div>
+                <div>
+                    <div class="feedback-title" id="feedbackTitle"></div>
+                </div>
+            </div>
+            <div class="feedback-text" id="feedbackText"></div>
+            <div class="clinical-insight" id="clinicalInsight"></div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="button-container">
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Scenario →</button>
+        </div>
+    </div>
+
+    <script>
+        const scenarios = [
+            {
+                id: 1,
+                context: "You're working a busy shift in the Emergency Department. Your pager is going off constantly.",
+                interaction: {
+                    icon: "📧",
+                    from: "IT Department",
+                    via: "Email - marked URGENT",
+                    message: "URGENT: Security breach detected on your workstation. Your account will be locked in 30 minutes unless you verify your credentials immediately. Click here to verify: http://nhs-verify-secure.net/login"
+                },
+                question: "Should you click the link to verify your credentials?",
+                correctAction: "refuse",
+                insights: [
+                    "IT departments never ask staff to verify credentials via email links",
+                    "Urgency tactics are classic social engineering red flags",
+                    "The URL mimics official NHS domains but uses suspicious TLD (.net instead of .nhs.uk)",
+                    "Real IT security alerts come through official internal systems, not email"
+                ],
+                explanation: "This is a classic phishing attack. Never click links in urgent emails asking for credentials. Always verify through official channels - call IT directly using the number on your hospital's internal directory. Your vigilance protects patient data."
+            },
+            {
+                id: 2,
+                context: "You're at the nurses' station updating patient charts when you receive an unexpected call.",
+                interaction: {
+                    icon: "📞",
+                    from: "Unknown Caller",
+                    via: "Phone - Claims to be Dr. Roberts from Radiology",
+                    message: "Hi, this is Dr. Roberts from Radiology. I'm off-site reviewing scans and my VPN isn't working. Can you quickly read me the MRN and DOB for patient in bed 4B? I need to access their imaging history urgently."
+                },
+                question: "Should you provide the patient information over the phone?",
+                correctAction: "refuse",
+                insights: [
+                    "Never provide patient information without verifying the caller's identity",
+                    "Use official callback numbers from the hospital directory, not caller ID",
+                    "Legitimate doctors understand security protocols and won't pressure you",
+                ],
+                explanation: "This is vishing (voice phishing) targeting healthcare workers. Always verify callers using official hospital extensions. A real doctor would understand security protocols. Offer to have IT help with their VPN issue instead."
+            },
+            {
+                id: 3,
+                context: "During your lunch break, you're catching up on messages in the staff break room.",
+                interaction: {
+                    icon: "💬",
+                    from: "Dr. Patel (Senior Consultant)",
+                    via: "WhatsApp - From saved contact",
+                    message: "Hi! I'm in a meeting and just realized I left my laptop at home. Can you take a photo of Mrs. Thompson's discharge summary on my desk and WhatsApp it to me? I need it for the MDT meeting in 10 minutes. Thanks!"
+                },
+                question: "Should you send the discharge summary via WhatsApp?",
+                correctAction: "refuse",
+                insights: [
+                    "WhatsApp and personal messaging apps are NOT secure channels for PHI",
+                    "Even if the contact appears legitimate, verify through official hospital communication",
+                    "Photographs of patient documents create unsecured copies vulnerable to breaches"
+                ],
+                explanation: "Never send patient information via personal messaging apps, even to colleagues. Use secure hospital systems like encrypted email or the EHR messaging function. Offer to scan it into the secure system or suggest they access it remotely through official channels."
+            },
+            {
+                id: 4,
+                context: "You're attending a professional development workshop at a hotel conference center.",
+                interaction: {
+                    icon: "💼",
+                    from: "Conference Organizer",
+                    via: "In-person request at registration desk",
+                    message: "Welcome! For our records and to print your name badge, can you please fill out this registration form with your full name, job title, hospital name, department, and work email address?"
+                },
+                question: "Is it appropriate to provide this information?",
+                correctAction: "comply",
+                insights: [
+                    "Basic professional information for legitimate events is acceptable",
+                    "This doesn't include patient data or sensitive security information",
+                    "Standard conference registration for CPD (Continuing Professional Development)",
+                    "Information shared is publicly available (job title, workplace)"
+                ],
+                explanation: "This is a legitimate request for professional networking. The information requested is standard for professional events and doesn't compromise patient privacy or security. However, never provide passwords, login credentials, or details about hospital security systems."
+            },
+            {
+                id: 5,
+                context: "A patient's family member approaches you at the nursing station looking distressed.",
+                interaction: {
+                    icon: "👤",
+                    from: "Man claiming to be patient's son",
+                    via: "In-person - No ID shown",
+                    message: "Hi, I'm John Smith, bed 7A is my mum. I've been away on business and just heard she was admitted. I'm flying back tonight. Can you tell me what's wrong with her and what treatment she's getting? She's 73, right? Just want to make sure you have the right patient."
+                },
+                question: "Should you provide the patient's medical information?",
+                correctAction: "refuse",
+                insights: [
+                    "Never disclose patient information without verifying relationship and patient consent",
+                    "Follow your hospital's visitor verification policy",
+                    "The person may be fishing for information to confirm patient identity",
+                    "Check the patient's record for authorized contacts and privacy preferences"
+                ],
+                explanation: "Always verify relationships and check patient consent before sharing information. Politely explain you need to verify his identity and check with the patient first. Offer to have him speak with the patient directly or contact the ward manager for proper verification procedures."
+            },
+            {
+                id: 6,
+                context: "You're working from the hospital library during your documentation time.",
+                interaction: {
+                    icon: "👨‍💼",
+                    from: "Person in business attire",
+                    via: "In-person - Wearing visitor badge",
+                    message: "Excuse me, I'm from MedTech Solutions, we're installing the new patient monitoring system next month. Can I have your staff login to test the integration with the current system? I'll only be 5 minutes and I'm already behind schedule."
+                },
+                question: "Should you provide your login credentials?",
+                correctAction: "refuse",
+                insights: [
+                    "NEVER share login credentials with anyone, regardless of their claimed role",
+                    "Legitimate IT vendors have their own test accounts and don't need staff credentials",
+                    "Badge doesn't verify identity - visitor badges can be obtained easily",
+                    "All vendor access should be coordinated through IT department"
+                ],
+                explanation: "Never share your credentials. Direct them to contact the IT department who manages all vendor access. Legitimate contractors have proper authorization and test accounts. Your login is your responsibility - you'd be liable for anything accessed with it."
+            },
+            {
+                id: 7,
+                context: "During your shift handover, you're reviewing patient assignments in the staff office.",
+                interaction: {
+                    icon: "📋",
+                    from: "Nursing Manager",
+                    via: "Official hospital email system",
+                    message: "Team: Reminder that our Joint Commission inspection is next week. Please ensure all patient charts are updated in our secure EHR system by Friday. If you need access to the compliance checklist, it's available on the hospital intranet under 'Quality Assurance' > 'Accreditation Resources'."
+                },
+                question: "Is this a legitimate and safe communication?",
+                correctAction: "comply",
+                insights: [
+                    "Sent via official hospital email system",
+                    "References legitimate hospital processes (Joint Commission, EHR)",
+                    "Directs to internal resources, not external links",
+                    "Appropriate managerial communication about compliance"
+                ],
+                explanation: "This is legitimate internal communication using official channels. It directs you to internal hospital resources and follows proper procedures. However, remain vigilant - if it asked you to click external links or provide credentials, that would be suspicious even from a manager's email."
+            },
+            {
+                id: 8,
+                context: "You're leaving your shift when a colleague approaches you in the parking lot.",
+                interaction: {
+                    icon: "💬",
+                    from: "Recognized Colleague - Dr. Martinez",
+                    via: "In-person conversation",
+                    message: "Hey! I'm writing a research paper on cardiac outcomes and I'd love to include some of our unit's data. I know you work with these patients daily - could you send me an anonymized list of cardiac patients from the last 6 months with their ages, diagnoses, and outcomes? I'll make sure to credit the department!"
+                },
+                question: "Should you provide this patient data?",
+                correctAction: "refuse",
+                insights: [
+                    "Research involving patient data requires IRB (Institutional Review Board) approval",
+                    "'Anonymized' data can still potentially identify patients",
+                    "Even colleagues need proper authorization for patient data access",
+                    "Research proposals must go through proper hospital channels"
+                ],
+                explanation: "Even well-intentioned research requires proper authorization. Direct your colleague to submit a research proposal through the proper channels - IRB approval, ethics committee, and data governance. Research must follow strict protocols to protect patient privacy, even when 'anonymized'."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function displayQuestion() {
+            const scenario = scenarios[currentQuestionIndex];
+            answered = false;
+
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = scenarios.length;
+
+            const progress = ((currentQuestionIndex + 1) / scenarios.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressPercentage').textContent = Math.round(progress) + '%';
+
+            document.getElementById('scenarioText').textContent = scenario.context;
+            renderInteraction(scenario.interaction);
+            document.getElementById('questionTitle').textContent = scenario.question;
+            renderActions();
+
+            document.getElementById('feedback').classList.remove('show', 'correct', 'incorrect');
+            document.getElementById('nextBtn').disabled = true;
+
+            if (currentQuestionIndex === scenarios.length - 1) {
+                document.getElementById('nextBtn').textContent = 'Complete Assessment';
+                document.getElementById('nextBtn').classList.remove('btn-primary');
+                document.getElementById('nextBtn').classList.add('btn-success');
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next Scenario →';
+                document.getElementById('nextBtn').classList.add('btn-primary');
+                document.getElementById('nextBtn').classList.remove('btn-success');
+            }
+        }
+
+        function renderInteraction(interaction) {
+            const display = document.getElementById('interactionDisplay');
+            display.innerHTML = `
+                <div class="interaction-header">
+                    <div class="interaction-icon">${interaction.icon}</div>
+                    <div class="interaction-from">
+                        <div class="interaction-title">${interaction.from}</div>
+                        <div class="interaction-subtitle">${interaction.via}</div>
+                    </div>
+                </div>
+                <div class="interaction-content">${interaction.message}</div>
+            `;
+        }
+
+        function renderActions() {
+            const container = document.getElementById('actionButtons');
+            container.innerHTML = `
+                <div class="action-btn safe" onclick="selectAction('comply')">
+                    <span class="action-icon">✅</span>
+                    <span class="action-label">Proceed Safely</span>
+                    <span class="action-desc">This follows proper protocols</span>
+                </div>
+                <div class="action-btn danger" onclick="selectAction('refuse')">
+                    <span class="action-icon">🛡️</span>
+                    <span class="action-label">Stop & Verify</span>
+                    <span class="action-desc">Potential security risk</span>
+                </div>
+            `;
+        }
+
+        function selectAction(action) {
+            if (answered) return;
+
+            const buttons = document.querySelectorAll('.action-btn');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+
+            event.currentTarget.classList.add('selected');
+
+            document.getElementById('nextBtn').disabled = false;
+            checkAnswer(action);
+        }
+
+        function checkAnswer(action) {
+            const scenario = scenarios[currentQuestionIndex];
+            const feedback = document.getElementById('feedback');
+            const feedbackIcon = document.getElementById('feedbackIcon');
+            const feedbackTitle = document.getElementById('feedbackTitle');
+            const feedbackText = document.getElementById('feedbackText');
+            const clinicalInsight = document.getElementById('clinicalInsight');
+
+            answered = true;
+
+            if (action === scenario.correctAction) {
+                score++;
+                feedback.classList.add('correct');
+                feedbackIcon.textContent = '✅';
+                feedbackTitle.textContent = 'Correct! Excellent Clinical Judgment';
+                feedbackText.textContent = scenario.explanation;
+            } else {
+                feedback.classList.add('incorrect');
+                feedbackIcon.textContent = '⚠️';
+                feedbackTitle.textContent = 'Not Recommended - Review Required';
+                
+                if (scenario.correctAction === 'refuse') {
+                    feedbackText.textContent = 'This was actually a security risk! ' + scenario.explanation;
+                } else {
+                    feedbackText.textContent = 'This was actually a safe, appropriate action. ' + scenario.explanation;
+                }
+            }
+
+            clinicalInsight.innerHTML = `
+                <div class="clinical-insight-title">
+                    <span>🏥</span> Clinical Security Insights:
+                </div>
+                <ul class="clinical-insight-list">
+                    ${scenario.insights.map(insight => `<li>${insight}</li>`).join('')}
+                </ul>
+            `;
+
+            feedback.classList.add('show');
+            document.getElementById('scoreDisplay').textContent = `${score}/${scenarios.length}`;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex === scenarios.length - 1) {
+                const moduleName = 'Human Hacking in Healthcare';
+                const badgeName = 'Healthcare Security Guardian';
+
+                localStorage.setItem('moduleScore', score);
+                localStorage.setItem('moduleName', moduleName);
+                localStorage.setItem('badgeName', badgeName);
+
+                window.location.href = `complete.html?module=${encodeURIComponent(moduleName)}&score=${score}&total=${scenarios.length}&badge=${encodeURIComponent(badgeName)}&passing=0.625`;
+                return;
+            }
+
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        displayQuestion();
+    </script>
+
+</body>
+</html>

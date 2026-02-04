@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            padding: 30px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #1e293b;
+            font-weight: bold;
+        }
+
+        .logo {
+            position: absolute;
+            right: 30px;
+            width: 80px;
+            height: 70px;
+        }
+
+        /* Main container */
+        .settings-container {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Left menu */
+        .side-menu {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item {
+            padding: 25px;
+            font-size: 16px;
+            color: #1e293b;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item.bold {
+            font-weight: bold;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+        }
+
+        .menu-item.back {
+            cursor: pointer;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        }
+
+        .menu-item.back:hover {
+            background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+            transform: translateX(-3px);
+        }
+
+        .menu-item:not(.back):not(.bold) {
+            cursor: pointer;
+        }
+
+        .menu-item:not(.back):not(.bold):hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Right panel */
+        .settings-content {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .profile-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #64748b;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .edit-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .edit-overlay:hover {
+            background: #2563eb;
+            transform: scale(1.1);
+        }
+
+        .edit-overlay svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+        }
+
+        .profile-label {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field label {
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .field input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .field input::placeholder {
+            color: #cbd5e1;
+        }
+
+        .button-group {
+            margin-top: 35px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .save-btn {
+            padding: 14px 35px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+        }
+
+        .save-btn:active {
+            transform: translateY(0);
+        }
+
+        .cancel-btn {
+            padding: 14px 35px;
+            border-radius: 25px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            background: white;
+            color: #64748b;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        /* Modal for icon selection */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 25px;
+            color: #1e293b;
+            text-align: center;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .icon-option {
+            aspect-ratio: 1;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            padding: 10px;
+        }
+
+        .icon-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .icon-option:hover {
+            background: #f1f5f9;
+            transform: scale(1.05);
+            border-color: #cbd5e1;
+        }
+
+        .icon-option.selected {
+            border-color: #3b82f6;
+            background: #dbeafe;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        @media (max-width: 1024px) {
+            .settings-container {
+                grid-template-columns: 1fr;
+            }
+
+            .side-menu {
+                flex-direction: row;
+            }
+
+            .menu-item {
+                border-bottom: none;
+                border-right: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .menu-item:last-child {
+                border-right: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .side-menu {
+                flex-direction: column;
+            }
+
+            .menu-item {
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>Settings Page</h1>
+        <img src="images/logo.png" class="logo" alt="ShieldLearn Logo">
+    </div>
+
+    <!-- Settings Container -->
+    <div class="settings-container">
+
+        <!-- Left menu -->
+        <div class="side-menu">
+            <div class="menu-item bold">User Settings</div>
+            <div class="menu-item">Privacy</div>
+            <div class="menu-item">Account Actions</div>
+            <div class="menu-item back" onclick="location.href='dash.html'">
+                ← Back to Dashboard
+            </div>
+        </div>
+
+        <!-- Right content -->
+        <div class="settings-content">
+
+            <div class="profile-section">
+                <div class="profile-icon" onclick="openIconModal()">
+                    <span id="profileIconDisplay">👤</span>
+                    <div class="edit-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="profile-label">Edit Your Profile Icon</div>
+            </div>
+
+            <div class="form-grid">
+                <div class="field">
+                    <label>First Name</label>
+                    <input id="firstName" placeholder="Click here to edit">
+                </div>
+
+                <div class="field">
+                    <label>Last Name</label>
+                    <input id="lastName" placeholder="Click here to edit">
+                </div>
+
+                <div class="field">
+                    <label>Email Address</label>
+                    <input id="email" type="email" placeholder="Click here to edit">
+                </div>
+
+                <div class="field">
+                    <label>Phone Number</label>
+                    <input id="phone" type="tel" placeholder="Click here to edit">
+                </div>
+
+                <div class="field">
+                    <label>New Password</label>
+                    <input id="password" type="password" placeholder="Click here to edit">
+                </div>
+
+                <div class="field">
+                    <label>Confirm New Password</label>
+                    <input id="confirmPassword" type="password" placeholder="Click here to edit">
+                </div>
+
+                <div class="field">
+                    <label>Link Your LinkedIn Account Here</label>
+                    <input id="linkedin" placeholder="Click here to edit">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="cancel-btn" onclick="cancelChanges()">Cancel</button>
+                <button class="save-btn" onclick="saveSettings()">Save Changes</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Icon Selection Modal -->
+    <div class="modal" id="iconModal">
+        <div class="modal-content">
+            <h2>Choose Your Profile Icon</h2>
+            <div class="icon-grid">
+                <div class="icon-option" data-icon="graduation" onclick="selectIcon('graduation')">
+                    <img src="images/user profiles/2.png" alt="Graduation Cap">
+                </div>
+                <div class="icon-option" data-icon="briefcase" onclick="selectIcon('briefcase')">
+                    <img src="images/user profiles/1.png" alt="Briefcase">
+                </div>
+                <div class="icon-option" data-icon="bomb" onclick="selectIcon('bomb')">
+                    <img src="images/user profiles/3.png" alt="Bomb">
+                </div>
+                <div class="icon-option" data-icon="bug" onclick="selectIcon('bug')">
+                    <img src="images/user profiles/4.png" alt="Bug">
+                </div>
+                <div class="icon-option" data-icon="question" onclick="selectIcon('question')">
+                    <img src="images/user profiles/5.png" alt="Question Mark">
+                </div>
+                <div class="icon-option" data-icon="virus" onclick="selectIcon('virus')">
+                    <img src="images/user profiles/6.png" alt="Virus">
+                </div>
+                <div class="icon-option" data-icon="shield" onclick="selectIcon('shield')">
+                    <img src="images/user profiles/7.png" alt="Shield">
+                </div>
+                <div class="icon-option" data-icon="server" onclick="selectIcon('server')">
+                    <img src="images/user profiles/8.png" alt="Server">
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="cancel-btn" onclick="closeIconModal()">Cancel</button>
+                <button class="save-btn" onclick="saveIcon()">Select</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedIconData = 'graduation';
+        let selectedIconPath = 'images/user profiles/2.png';
+        let tempSelectedIcon = 'graduation';
+        let tempSelectedIconPath = 'images/user profiles/2.png';
+
+        // Load existing data
+        window.onload = function() {
+            document.getElementById("firstName").value = ""; // localStorage.getItem("firstName") || "";
+            document.getElementById("lastName").value = ""; // localStorage.getItem("lastName") || "";
+            document.getElementById("email").value = ""; // localStorage.getItem("email") || "";
+            document.getElementById("phone").value = ""; // localStorage.getItem("phone") || "";
+            document.getElementById("linkedin").value = ""; // localStorage.getItem("linkedin") || "";
+            
+            // Set default icon
+            const iconDisplay = document.getElementById("profileIconDisplay");
+            iconDisplay.innerHTML = `<img src="${selectedIconPath}" alt="Profile Icon">`;
+        };
+
+        function openIconModal() {
+            document.getElementById("iconModal").classList.add("active");
+            tempSelectedIcon = selectedIconData;
+            
+            // Highlight current icon
+            document.querySelectorAll('.icon-option').forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.dataset.icon === selectedIconData) {
+                    opt.classList.add('selected');
+                }
+            });
+        }
+
+        function closeIconModal() {
+            document.getElementById("iconModal").classList.remove("active");
+        }
+
+        function selectIcon(icon) {
+            tempSelectedIcon = icon;
+            
+            // Remove selected class from all options
+            document.querySelectorAll('.icon-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            const selectedOption = document.querySelector(`[data-icon="${icon}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+                tempSelectedIconPath = selectedOption.querySelector('img').src;
+            }
+        }
+
+        function saveIcon() {
+            selectedIconData = tempSelectedIcon;
+            selectedIconPath = tempSelectedIconPath;
+            
+            // Update the profile icon display with image
+            const iconDisplay = document.getElementById("profileIconDisplay");
+            iconDisplay.innerHTML = `<img src="${selectedIconPath}" alt="Profile Icon">`;
+            
+            // localStorage.setItem("profileIcon", selectedIconData);
+            // localStorage.setItem("profileIconPath", selectedIconPath);
+            closeIconModal();
+        }
+
+        function saveSettings() {
+            const password = document.getElementById("password").value;
+            const confirm = document.getElementById("confirmPassword").value;
+
+            if (password && password !== confirm) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Save to localStorage (commented out to avoid storage in artifact)
+            // localStorage.setItem("firstName", document.getElementById("firstName").value);
+            // localStorage.setItem("lastName", document.getElementById("lastName").value);
+            // localStorage.setItem("email", document.getElementById("email").value);
+            // localStorage.setItem("phone", document.getElementById("phone").value);
+            // localStorage.setItem("linkedin", document.getElementById("linkedin").value);
+            // if (password) localStorage.setItem("password", password);
+
+            alert("Settings saved successfully!");
+        }
+
+        function cancelChanges() {
+            if (confirm("Are you sure you want to discard your changes?")) {
+                location.reload();
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById("iconModal").addEventListener("click", function(e) {
+            if (e.target === this) {
+                closeIconModal();
+            }
+        });
+    </script>
+
+</body>
+</html>

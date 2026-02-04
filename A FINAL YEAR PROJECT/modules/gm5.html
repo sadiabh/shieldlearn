@@ -1,0 +1,750 @@
+<!-- no more baiting -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No More Baiting! - ShieldLearn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+        /* ===== GLOBAL STYLES ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            padding: 20px;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .module-title {
+            font-size: 28px;
+            color: #1e293b;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .logo {
+            position: absolute;
+            right: 0;
+            width: 80px;
+            height: 70px;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 14px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        /* ===== MAIN GAME CONTAINER ===== */
+        .game-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* ===== PHONE CALL INTERFACE ===== */
+        .phone-interface {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background pulse effect for phone interface */
+        .phone-interface::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 0.5; 
+            }
+            50% { 
+                transform: scale(1.1); 
+                opacity: 0.8; 
+            }
+        }
+
+        /* ===== CALLER INFORMATION ===== */
+        .caller-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .caller-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #052e5e 0%, #a869f0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 0 20px rgb(255, 0, 0);
+            animation: avatarPulse 2s ease-in-out infinite;
+        }
+
+        /* Pulsing red glow effect for caller avatar */
+        @keyframes avatarPulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgb(255, 0, 0); 
+            }
+            50% { 
+                box-shadow: 0 0 30px rgb(255, 0, 0); 
+            }
+        }
+
+        .caller-details {
+            color: white;
+        }
+
+        .caller-name {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .caller-number {
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .call-status {
+            display: inline-block;
+            background: rgba(239, 68, 68, 0.3);
+            color: #fecaca;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* ===== SPEECH BUBBLE ===== */
+        .speech-bubble {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        /* Slide in animation for speech bubble */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Triangle pointer at top of speech bubble */
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 30px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid white;
+        }
+
+        .question-text {
+            font-size: 20px;
+            color: #1e293b;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* ===== ACTION SECTION ===== */
+        .action-section {
+            margin-bottom: 30px;
+        }
+
+        .action-title {
+            font-size: 18px;
+            color: #1e293b;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* ===== ACTION BUTTONS - NEUTRAL PURPLE COLOR ===== */
+        /* Both buttons use same purple border to avoid color bias */
+        .action-btn {
+            padding: 20px;
+            border: 3px solid #5759c0; /* Neutral purple - no color influence */
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #1e293b;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Green background when safe option is selected */
+        .action-btn.selected.safe {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-color: #5759c0;
+        }
+
+        /* Red background when danger option is selected */
+        .action-btn.selected.danger {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #5759c0;
+        }
+
+        .action-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        /* ===== FEEDBACK SECTION ===== */
+        .feedback {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        /* Correct answer feedback styling */
+        .feedback.correct {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-left: 5px solid #22c55e;
+        }
+
+        /* Incorrect answer feedback styling */
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 5px solid #ef4444;
+        }
+
+        .feedback-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feedback.correct .feedback-title {
+            color: #15803d;
+        }
+
+        .feedback.incorrect .feedback-title {
+            color: #991b1b;
+        }
+
+        .feedback-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1e293b;
+        }
+
+        /* ===== RED FLAGS BOX ===== */
+        .red-flag {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .red-flag-title {
+            font-weight: bold;
+            color: #dc2626;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .red-flag-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .red-flag-list li {
+            padding: 5px 0;
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .red-flag-list li::before {
+            content: '🚩 ';
+            margin-right: 8px;
+        }
+
+        /* ===== SCORE DISPLAY ===== */
+        .score-display {
+            text-align: center;
+            font-size: 18px;
+            color: #475569;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .score-number {
+            color: #ef4444;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* ===== NAVIGATION BUTTONS ===== */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .module-title {
+                font-size: 20px;
+            }
+
+            .game-container {
+                padding: 25px;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .caller-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1 class="module-title">No More Baiting!</h1>
+        <img src="../images/logo.png" class="logo" alt="ShieldLearn Logo">
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-info">
+            <span>Scenario <span id="currentQuestion">1</span> of <span id="totalQuestions">7</span></span>
+            <span id="progressPercentage">20%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        
+        <div class="score-display">
+            Scams Detected: <span class="score-number" id="scoreDisplay">0/7</span>
+        </div>
+
+        <!-- Phone Interface -->
+        <div class="phone-interface">
+            <div class="caller-info">
+                <div class="caller-avatar">📞</div>
+                <div class="caller-details">
+                    <div class="caller-name" id="callerName">Unknown Caller</div>
+                    <div class="caller-number" id="callerNumber">+44 7XXX XXXXXX</div>
+                    <div class="call-status">⚠️ SUSPICIOUS CALL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Speech Bubble -->
+        <div class="speech-bubble">
+            <div class="question-text" id="questionText"></div>
+        </div>
+
+        <!-- Action Section -->
+        <div class="action-section">
+            <div class="action-title">🎯 How should you respond?</div>
+            <div class="action-buttons" id="actionButtons"></div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback" id="feedback">
+            <div class="feedback-title" id="feedbackTitle"></div>
+            <div class="feedback-text" id="feedbackText"></div>
+            <div class="red-flag" id="redFlagSection"></div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="button-container">
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Scenario →</button>
+        </div>
+    </div>
+
+    <script>
+        const scenarios = [
+            {
+                id: 1,
+                caller: "Bank Security Team",
+                number: "+44 800 XXXX",
+                question: "I just need to confirm your identity — can you tell me your full name and date of birth?",
+                correctAction: "refuse",
+                redFlags: [
+                    "Legitimate organizations don't ask for personal information to verify YOU",
+                    "Banks already have your details - they don't need you to confirm them",
+                    "This is a classic identity phishing tactic"
+                ],
+                explanation: "Never give personal information over the phone. If someone needs to verify your identity, they should ask you to verify THEM first. You should hang up and call the official number."
+            },
+            {
+                id: 2,
+                caller: "IT Support",
+                number: "+44 7234 XXXX",
+                question: "There's been suspicious activity on your account. Can you verify your login details so we can secure it?",
+                correctAction: "refuse",
+                redFlags: [
+                    "Creating urgency with 'suspicious activity' to make you panic",
+                    "No legitimate service asks for login credentials over the phone",
+                    "Scammers use fear to bypass your critical thinking"
+                ],
+                explanation: "Login credentials should NEVER be shared with anyone, even if they claim to be from support. Always access your account directly through official channels."
+            },
+            {
+                id: 3,
+                caller: "University Support",
+                number: "+44 161 XXX XXXX",
+                question: "I'm calling from your university's student support. For security, can you confirm which email address you have registered with us?",
+                correctAction: "comply",
+                greenFlags: [
+                    "They're asking you to confirm what YOU already know",
+                    "Email addresses are less sensitive than passwords or personal details",
+                    "This is reasonable verification - they're not asking for passwords or financial info"
+                ],
+                explanation: "This is a legitimate verification method. They're asking you to confirm information YOU already know, not asking for sensitive credentials. However, always be cautious and if unsure, offer to call them back on an official number."
+            },
+            {
+                id: 4,
+                caller: "Refund Department",
+                number: "+44 203 XXXX",
+                question: "You're eligible for a refund, but we need your bank details to process it today.",
+                correctAction: "refuse",
+                redFlags: [
+                    "Pressure to act 'today' is a manipulation tactic",
+                    "Legitimate refunds don't require you to provide bank details over the phone",
+                    "Scammers use financial incentives as bait"
+                ],
+                explanation: "Refund scams are extremely common. Real companies process refunds through secure, verified channels, not by asking for bank details over the phone."
+            },
+            {
+                id: 5,
+                caller: "Account Security",
+                number: "Unknown Number",
+                question: "This issue must be resolved immediately or your account will be locked. Are you able to act right now?",
+                correctAction: "refuse",
+                redFlags: [
+                    "Extreme urgency and threats are major red flags",
+                    "Fear of account lockout pressures you to comply",
+                    "No time to think = scammer's advantage"
+                ],
+                explanation: "Scammers use threats and urgency to prevent rational thinking. Legitimate organizations give you time and multiple ways to resolve issues."
+            },
+            {
+                id: 6,
+                caller: "Online Retailer Support",
+                number: "+44 800 XXXX",
+                question: "We need to verify your recent order. Can you confirm the last four digits of the card you used for your purchase?",
+                correctAction: "comply",
+                greenFlags: [
+                    "Asking for last 4 digits only (not full card number)",
+                    "Related to a specific transaction you made",
+                    "This is standard verification used by legitimate companies"
+                ],
+                explanation: "Asking for the last 4 digits of your card is a standard, safe verification method. They're NOT asking for the full number, CVV, or PIN. However, only provide this if you initiated the contact or can verify the caller's legitimacy."
+            },
+            {
+                id: 7,
+                caller: "Verification Team",
+                number: "+44 800 XXXX",
+                question: "I've sent you a one-time code — please read it back to me so I can finish the verification.",
+                correctAction: "refuse",
+                redFlags: [
+                    "One-time codes are for YOUR verification only",
+                    "Sharing codes gives scammers access to your accounts",
+                    "This is a direct account takeover attempt"
+                ],
+                explanation: "Never share one-time codes with anyone. These codes are designed to verify that YOU are trying to access YOUR account, not to verify someone else."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function displayQuestion() {
+            const scenario = scenarios[currentQuestionIndex];
+            answered = false;
+
+            document.getElementById('callerName').textContent = scenario.caller;
+            document.getElementById('callerNumber').textContent = scenario.number;
+            document.getElementById('questionText').textContent = '"' + scenario.question + '"';
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = scenarios.length;
+
+            const progress = ((currentQuestionIndex + 1) / scenarios.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressPercentage').textContent = Math.round(progress) + '%';
+
+            renderActions();
+
+            document.getElementById('feedback').classList.remove('show', 'correct', 'incorrect');
+            const redFlagSection = document.getElementById('redFlagSection');
+            redFlagSection.style.background = 'rgba(239, 68, 68, 0.1)';
+            redFlagSection.style.borderLeftColor = '#ef4444';
+            document.getElementById('nextBtn').disabled = true;
+
+            if (currentQuestionIndex === scenarios.length - 1) {
+                document.getElementById('nextBtn').textContent = 'Finish';
+                document.getElementById('nextBtn').classList.remove('btn-primary');
+                document.getElementById('nextBtn').classList.add('btn-success');
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next Scenario →';
+                document.getElementById('nextBtn').classList.add('btn-primary');
+                document.getElementById('nextBtn').classList.remove('btn-success');
+            }
+        }
+
+        function renderActions() {
+            const container = document.getElementById('actionButtons');
+            container.innerHTML = `
+                <div class="action-btn safe" onclick="selectAction('refuse')">
+                    <span class="action-icon">🛡️</span>
+                    <span>Refuse & Hang Up<br><small>Protect yourself</small></span>
+                </div>
+                <div class="action-btn danger" onclick="selectAction('comply')">
+                    <span class="action-icon">⚠️</span>
+                    <span>Provide Information<br><small>Answer their request</small></span>
+                </div>
+            `;
+        }
+
+        function selectAction(action) {
+            if (answered) return;
+
+            const buttons = document.querySelectorAll('.action-btn');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+
+            event.currentTarget.classList.add('selected');
+
+            document.getElementById('nextBtn').disabled = false;
+            checkAnswer(action);
+        }
+
+        function checkAnswer(action) {
+            const scenario = scenarios[currentQuestionIndex];
+            const feedback = document.getElementById('feedback');
+            const feedbackTitle = document.getElementById('feedbackTitle');
+            const feedbackText = document.getElementById('feedbackText');
+            const redFlagSection = document.getElementById('redFlagSection');
+
+            answered = true;
+
+            if (action === scenario.correctAction) {
+                score++;
+                feedback.classList.add('correct');
+                feedbackTitle.textContent = '✅ Correct! Well Done!';
+                feedbackText.textContent = scenario.explanation;
+            } else {
+                feedback.classList.add('incorrect');
+                feedbackTitle.textContent = '❌ Not Quite!';
+                
+                if (scenario.correctAction === 'refuse') {
+                    feedbackText.textContent = 'You should NEVER provide this information over the phone in this situation. ' + scenario.explanation;
+                } else {
+                    feedbackText.textContent = 'This was actually a legitimate request! ' + scenario.explanation;
+                }
+            }
+
+            // Display red flags or green flags
+            if (scenario.redFlags) {
+                redFlagSection.innerHTML = `
+                    <div class="red-flag-title">🚩 Red Flags in This Call:</div>
+                    <ul class="red-flag-list">
+                        ${scenario.redFlags.map(flag => `<li>${flag}</li>`).join('')}
+                    </ul>
+                `;
+            } else if (scenario.greenFlags) {
+                redFlagSection.innerHTML = `
+                    <div class="red-flag-title" style="color: #15803d; border-left-color: #22c55e;">✅ Green Flags in This Call:</div>
+                    <ul class="red-flag-list">
+                        ${scenario.greenFlags.map(flag => `<li style="color: #1e293b;">${flag.replace('🚩', '✅')}</li>`).join('')}
+                    </ul>
+                `;
+                redFlagSection.style.background = 'rgba(34, 197, 94, 0.1)';
+                redFlagSection.style.borderLeftColor = '#22c55e';
+            }
+
+            feedback.classList.add('show');
+            document.getElementById('scoreDisplay').textContent = `${score}/${scenarios.length}`;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex === scenarios.length - 1) {
+                const moduleName = 'No More Baiting!';
+                const badgeName = 'Bait Buster';
+
+                localStorage.setItem('moduleScore', score);
+                localStorage.setItem('moduleName', moduleName);
+                localStorage.setItem('badgeName', badgeName);
+
+                window.location.href = `complete.html?module=${encodeURIComponent(moduleName)}&score=${score}&total=${scenarios.length}&badge=${encodeURIComponent(badgeName)}&passing=0.57`;
+                return;
+            }
+
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        displayQuestion();
+    </script>
+
+</body>
+</html>

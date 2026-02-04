@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldLearn - Splash</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 40px;
+        }
+
+        .welcome-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .lock-button {
+            border: none;
+            border-radius: 50%;
+            padding: 0px;
+            cursor: pointer;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .lock-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .lock-button:active {
+            transform: scale(0.95);
+        }
+
+        .lock-icon {
+            width: 100px;
+            height: 100px;
+                }
+
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2rem;
+            }
+            .welcome-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Shield Logo -->
+        <div class="logo-container">
+                <img src="images\logo.png" alt="shieldlearnLogo" svg width="400" height="400" viewBox="0 0 400 400"></svg>
+        </div>
+
+        <!-- Welcome Text -->
+        <h1 class="welcome-title">WELCOME TO SHIELDLEARN!</h1>
+        <p class="welcome-subtitle">click on the lock to get started.</p>
+
+        <!-- Lock Button -->
+        <button class="lock-button" onclick="window.location.href='login.html'">
+            <img src="images\lock.png" alt="lock" svg class="lock-icon"></svg>
+        </button>
+    </div>
+</body>
+</html>
