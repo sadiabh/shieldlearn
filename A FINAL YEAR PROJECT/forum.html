@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ShieldLearn Forum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #bfdbfe 100%);
+            padding: 30px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #1e293b;
+            font-weight: bold;
+            flex: 1;
+            text-align: center;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            color: #1e293b;
+            padding: 10px 20px;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 100%);
+            color: #fff;
+        }
+
+        /* ===== FORUM LAYOUT ===== */
+        .forum-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr 260px;
+            gap: 25px;
+            min-height: calc(100vh - 180px);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #1e293b;
+            margin-bottom: 18px;
+            font-size: 20px;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: #94a3b8;
+            padding: 0 4px 4px;
+            margin-top: 8px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-item:hover {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            color: #1e293b;
+            transform: translateX(3px);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+            color: #1e40af;
+        }
+
+        .sidebar-badge {
+            background: #3b82f6;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 2px 7px;
+            margin-left: auto;
+        }
+
+        .sidebar-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .sidebar-divider {
+            border: none;
+            border-top: 1.5px solid #e2e8f0;
+            margin: 6px 0;
+        }
+
+        /* ===== FEED ===== */
+        .feed-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .new-post-btn {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 9px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .new-post-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            background: rgba(226, 232, 240, 0.5);
+            border-radius: 14px;
+            padding: 4px;
+            margin-bottom: 18px;
+            width: fit-content;
+        }
+
+        .tab {
+            padding: 6px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            border-radius: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            background: #fff;
+            color: #1e40af;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .tab:hover:not(.active) { color: #1e293b; }
+
+        /* Composer */
+        #composer {
+            background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+            border: 2px solid #93c5fd;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        #composer input, #composer textarea, #composer select {
+            width: 100%;
+            background: #fff;
+            border: 1.5px solid #bfdbfe;
+            border-radius: 12px;
+            color: #1e293b;
+            font-size: 13px;
+            padding: 10px 14px;
+            font-family: Arial, sans-serif;
+            outline: none;
+            margin-bottom: 8px;
+            transition: border-color 0.2s;
+        }
+
+        #composer input:focus, #composer textarea:focus {
+            border-color: #60a5fa;
+        }
+
+        #composer textarea { resize: none; line-height: 1.5; }
+
+        .composer-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .btn-ghost {
+            background: #fff;
+            border: 1.5px solid #bfdbfe;
+            color: #475569;
+            border-radius: 12px;
+            padding: 7px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-ghost:hover { background: #f1f5f9; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 7px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(59,130,246,0.35); }
+
+        /* Post cards */
+        .post-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1.5px solid #e0e7ff;
+            border-radius: 16px;
+            padding: 16px 18px;
+            margin-bottom: 12px;
+            display: grid;
+            grid-template-columns: 42px 1fr;
+            gap: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .post-card:hover {
+            border-color: #93c5fd;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.12);
+        }
+
+        .vote-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding-top: 2px;
+        }
+
+        .vote-btn {
+            width: 30px;
+            height: 26px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            border: 1px solid #c7d2fe;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #64748b;
+            font-size: 13px;
+            transition: all 0.15s;
+            font-weight: 700;
+        }
+
+        .vote-btn:hover { background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%); color: #1e40af; }
+        .vote-btn.voted-up { background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%); color: #166534; border-color: #86efac; }
+        .vote-btn.voted-down { background: linear-gradient(135deg, #fee2e2 0%, #fca5a5 100%); color: #991b1b; border-color: #fca5a5; }
+
+        .vote-count {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e40af;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+
+        .post-category {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            color: #1e40af;
+            padding: 3px 9px;
+            border-radius: 8px;
+        }
+
+        .post-author {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .post-author strong { color: #475569; font-weight: 600; }
+
+        .post-dot { color: #cbd5e1; font-size: 10px; }
+
+        .post-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .post-excerpt {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .post-footer {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .post-stat {
+            font-size: 12px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .post-tags { display: flex; gap: 6px; margin-left: auto; }
+
+        .tag {
+            font-size: 10px;
+            color: #64748b;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 2px 8px;
+        }
+
+        /* Comment thread */
+        #comment-section { display: none; }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover { background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%); color: #1e40af; }
+
+        .comment-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+            border: 1.5px solid #bfdbfe;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .comment-box-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .comment-input {
+            width: 100%;
+            background: #fff;
+            border: 1.5px solid #bfdbfe;
+            border-radius: 12px;
+            color: #1e293b;
+            font-size: 13px;
+            padding: 10px 14px;
+            resize: none;
+            outline: none;
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            transition: border-color 0.2s;
+        }
+
+        .comment-input:focus { border-color: #60a5fa; }
+        .comment-input::placeholder { color: #94a3b8; }
+
+        .comment-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .comment {
+            display: grid;
+            grid-template-columns: 34px 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .comment-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .comment-body {
+            background: rgba(255,255,255,0.9);
+            border: 1.5px solid #e0e7ff;
+            border-radius: 14px;
+            padding: 10px 14px;
+        }
+
+        .comment-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 3px;
+        }
+
+        .comment-text {
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .comment-time {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        .comment-reply {
+            font-size: 11px;
+            color: #3b82f6;
+            cursor: pointer;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        /* ===== RIGHT PANEL ===== */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .panel-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: #94a3b8;
+            margin-bottom: 14px;
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 14px;
+            padding: 14px 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e40af;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #475569;
+            margin-top: 2px;
+        }
+
+        /* Trending */
+        .trending-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1.5px solid #f1f5f9;
+        }
+
+        .trending-num {
+            font-size: 20px;
+            font-weight: 800;
+            color: #e0e7ff;
+            min-width: 22px;
+            line-height: 1;
+            margin-top: 2px;
+        }
+
+        .trending-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+
+        .trending-count {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        /* Active members */
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .user-name { font-size: 13px; font-weight: 600; color: #1e293b; }
+        .user-rep { font-size: 11px; color: #94a3b8; }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            margin-left: auto;
+            box-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+        }
+
+        .offline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            margin-left: auto;
+        }
+
+        /* Article cards */
+        .article-card {
+            background: rgba(255,255,255,0.9);
+            border: 1.5px solid #e0e7ff;
+            border-radius: 16px;
+            padding: 16px 18px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .article-card:hover {
+            border-color: #93c5fd;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.12);
+        }
+
+        .article-header { display: flex; gap: 12px; }
+
+        .article-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            border: 1.5px solid #bfdbfe;
+        }
+
+        .article-title { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 4px; line-height: 1.4; }
+        .article-desc { font-size: 11px; color: #64748b; line-height: 1.5; }
+
+        .article-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1.5px solid #f1f5f9;
+        }
+
+        .article-source { font-size: 11px; color: #3b82f6; font-weight: 600; }
+        .article-date { font-size: 11px; color: #94a3b8; margin-left: auto; }
+
+        /* View toggle */
+        .view-section { display: block; }
+        .view-section.hidden { display: none; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1100px) {
+            .forum-layout { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .header { flex-direction: column; gap: 15px; }
+            .header h1 { font-size: 24px; }
+            .header-nav { flex-wrap: wrap; justify-content: center; }
+            .logo { width: 50px; height: 50px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <img src="images/logo.png" alt="ShieldLearn Logo" class="logo">
+        <h1>ShieldLearn Forum</h1>
+        <div class="header-nav">
+            <button class="nav-btn" onclick="location.href='dash.html'">Dashboard</button>
+            <button class="nav-btn" onclick="location.href='modulelist.html'">All Modules</button>
+            <button class="nav-btn active">Forum</button>
+            <button class="nav-btn" onclick="location.href='settings.html'">Settings</button>
+            <button class="nav-btn" onclick="alert('Chat with AL!')">Ask AL</button>
+        </div>
+    </div>
+
+    <!-- ===== FORUM LAYOUT ===== -->
+    <div class="forum-layout">
+
+        <!-- ===== LEFT SIDEBAR ===== -->
+        <div class="card sidebar">
+            <h2>Browse</h2>
+            <div class="sidebar-item active">⊞ &nbsp;All Posts</div>
+            <div class="sidebar-item">🔥 &nbsp;Trending <span class="sidebar-badge">12</span></div>
+            <div class="sidebar-item">✦ &nbsp;Featured</div>
+            <div class="sidebar-item">🕐 &nbsp;Recent</div>
+
+            <hr class="sidebar-divider">
+            <div class="sidebar-label">Categories</div>
+            <div class="sidebar-item"><span class="sidebar-dot" style="background:#3b82f6;"></span> Cyber Safety</div>
+            <div class="sidebar-item"><span class="sidebar-dot" style="background:#22c55e;"></span> Passwords</div>
+            <div class="sidebar-item"><span class="sidebar-dot" style="background:#f59e0b;"></span> Phishing</div>
+            <div class="sidebar-item"><span class="sidebar-dot" style="background:#ef4444;"></span> Scams</div>
+            <div class="sidebar-item"><span class="sidebar-dot" style="background:#a78bfa;"></span> Module Help</div>
+
+            <hr class="sidebar-divider">
+            <div class="sidebar-label">My Space</div>
+            <div class="sidebar-item">📌 &nbsp;Saved</div>
+            <div class="sidebar-item">📝 &nbsp;My Posts</div>
+            <div class="sidebar-item">💬 &nbsp;My Comments</div>
+        </div>
+
+        <!-- ===== MAIN FEED ===== -->
+        <div class="card">
+
+            <!-- FORUM VIEW -->
+            <div id="forum-view" class="view-section">
+                <div class="feed-header">
+                    <div style="display:flex;gap:6px;background:rgba(226,232,240,0.5);border-radius:14px;padding:4px;">
+                        <button class="tab active" style="border:none;cursor:pointer;" onclick="switchView('forum')">📊 Forum Posts</button>
+                        <button class="tab" style="border:none;cursor:pointer;" onclick="switchView('articles')">📰 Articles</button>
+                    </div>
+                    <button class="new-post-btn" onclick="openPost()">+ New Post</button>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active">Hot</div>
+                    <div class="tab">New</div>
+                    <div class="tab">Top</div>
+                    <div class="tab">Rising</div>
+                </div>
+
+                <!-- New post composer -->
+                <div id="composer">
+                    <div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:12px;">Create a Post</div>
+                    <input id="post-title-input" type="text" placeholder="Post title...">
+                    <select id="post-cat-input">
+                        <option value="Cyber Safety">Cyber Safety</option>
+                        <option value="Passwords">Passwords</option>
+                        <option value="Phishing">Phishing</option>
+                        <option value="Scams">Scams</option>
+                        <option value="Module Help">Module Help</option>
+                    </select>
+                    <textarea id="post-body-input" rows="3" placeholder="Share your thoughts or ask a question..."></textarea>
+                    <div class="composer-actions">
+                        <button class="btn-ghost" onclick="closePost()">Cancel</button>
+                        <button class="btn-primary" onclick="submitPost()">Post</button>
+                    </div>
+                </div>
+
+                <!-- Posts list -->
+                <div id="posts-list">
+
+                    <div class="post-card" onclick="openComments(this)">
+                        <div class="vote-col">
+                            <div class="vote-btn" onclick="event.stopPropagation();vote(this,1)">▲</div>
+                            <div class="vote-count">42</div>
+                            <div class="vote-btn" onclick="event.stopPropagation();vote(this,-1)">▼</div>
+                        </div>
+                        <div>
+                            <div class="post-meta">
+                                <span class="post-category">Phishing</span>
+                                <span class="post-dot">•</span>
+                                <span class="post-author">by <strong>shield_learner</strong></span>
+                                <span class="post-dot">•</span>
+                                <span class="post-author">2h ago</span>
+                            </div>
+                            <div class="post-title">How do I spot a phishing email? My colleague almost fell for one today!</div>
+                            <div class="post-excerpt">My colleague got an email that looked exactly like it was from our bank. It had the logo and everything. What are the telltale signs we should look for?</div>
+                            <div class="post-footer">
+                                <div class="post-stat">💬 18 comments</div>
+                                <div class="post-stat">👁 340 views</div>
+                                <div class="post-tags"><span class="tag">phishing</span><span class="tag">email</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-card" onclick="openComments(this)">
+                        <div class="vote-col">
+                            <div class="vote-btn" onclick="event.stopPropagation();vote(this,1)">▲</div>
+                            <div class="vote-count">31</div>
+                            <div class="vote-btn" onclick="event.stopPropagation();vote(this,-1)">▼</div>
+                        </div>
+                        <div>
+                            <div class="post-meta">
+                                <span class="post-category" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#166534;">Passwords</span>
+                                <span class="post-dot">•</span>
+                                <span class="post-author">by <strong>safetyFirst99</strong></span>
+                                <span class="post-dot">•</span>
+                                <span class="post-author">4h ago</span>
+                            </div>
+                            <div class="post-title">Is a password manager actually safe? What does everyone use?</div>
+                            <div class="post-excerpt">Completed the "Password on Lock" module and it recommended a password manager. I'm a bit nervous about putting all my passwords in one place — thoughts?</div>
+                            <div class="post-footer">
+                                <div class="post-stat">💬 27 comments</div>
+                                <div class="post-stat">👁 512 views</div>
+                                <div class="post-tags"><span class="tag">passwords</span><span class="tag">tools</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-card" onclick="openComments(this)">
+                        <div class="vote-col">
+                            <div class="vote-btn" onclick="event.stopPropagation();vote(this,1)">▲</div>
+                            <div class="vote-count">19</div>
+                            <div class="vote-btn" onclick="event.stopPropagation();vote(this,-1)">▼</div>
+                        </div>
+                        <div>
+                            <div class="post-meta">
+                                <span class="post-category" style="background:linear-gradient(135deg,#fef9c3,#fde68a);color:#92400e;">Scams</span>
+                                <span class="post-dot">•</span>
+                                <span class="post-author">by <strong>TechNovice2024</strong></span>
+                                <span class="post-dot">•</span>
+                                <span class="post-author">6h ago</span>
+                            </div>
+                            <div class="post-title">Got a call claiming to be from Microsoft — was this a scam?</div>
+                            <div class="post-excerpt">Someone called me saying my computer had been hacked and they needed remote access to fix it. I hung up but it felt very convincing. Has this happened to anyone?</div>
+                            <div class="post-footer">
+                                <div class="post-stat">💬 33 comments</div>
+                                <div class="post-stat">👁 704 views</div>
+                                <div class="post-tags"><span class="tag">scam</span><span class="tag">phone</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-card" onclick="openComments(this)">
+                        <div class="vote-col">
+                            <div class="vote-btn" onclick="event.stopPropagation();vote(this,1)">▲</div>
+                            <div class="vote-count">14</div>
+                            <div class="vote-btn" onclick="event.stopPropagation();vote(this,-1)">▼</div>
+                        </div>
+                        <div>
+                            <div class="post-meta">
+                                <span class="post-category" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);color:#5b21b6;">Module Help</span>
+                                <span class="post-dot">•</span>
+                                <span class="post-author">by <strong>learner_42</strong></span>
+                                <span class="post-dot">•</span>
+                                <span class="post-author">1d ago</span>
+                            </div>
+                            <div class="post-title">Stuck on the quiz in "No more Baiting!" — any tips?</div>
+                            <div class="post-excerpt">Question 4 keeps tripping me up. I know what baiting is but I keep picking the wrong answer. Can anyone give a hint without spoiling it?</div>
+                            <div class="post-footer">
+                                <div class="post-stat">💬 9 comments</div>
+                                <div class="post-stat">👁 188 views</div>
+                                <div class="post-tags"><span class="tag">modules</span><span class="tag">help</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Comment section -->
+                <div id="comment-section">
+                    <button class="back-btn" onclick="closeComments()">← Back to Posts</button>
+                    <div class="comment-box">
+                        <div class="comment-box-label">Add a comment</div>
+                        <textarea class="comment-input" id="new-comment" rows="3" placeholder="Share your thoughts or answer the question..."></textarea>
+                        <div class="comment-actions">
+                            <button class="btn-ghost" onclick="document.getElementById('new-comment').value=''">Clear</button>
+                            <button class="btn-primary" onclick="postComment()">Comment</button>
+                        </div>
+                    </div>
+                    <div id="comments-container">
+                        <div class="comment">
+                            <div class="comment-avatar" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;">AL</div>
+                            <div class="comment-body">
+                                <div class="comment-name">AL (ShieldLearn AI) <span style="font-size:10px;font-weight:600;background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;padding:2px 8px;border-radius:6px;margin-left:6px;">AI Helper</span></div>
+                                <div class="comment-text">Great question! There are several key signs: check the sender's actual email address (not just the display name), hover over links before clicking, look for urgent or threatening language, and be wary of unexpected attachments. The "Shield against Phishers" module covers all of these in detail!</div>
+                                <div class="comment-time">1h ago <span class="comment-reply">Reply</span></div>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <div class="comment-avatar" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#166534;">JM</div>
+                            <div class="comment-body">
+                                <div class="comment-name">jm_secure</div>
+                                <div class="comment-text">Also check if the URL in the email matches the company's real domain. Scammers often use things like "paypa1.com" with a number instead of a letter!</div>
+                                <div class="comment-time">45m ago <span class="comment-reply">Reply</span></div>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <div class="comment-avatar" style="background:linear-gradient(135deg,#fef9c3,#fde68a);color:#92400e;">SR</div>
+                            <div class="comment-body">
+                                <div class="comment-name">shield_rookie</div>
+                                <div class="comment-text">My rule is: if an email creates panic or urgency (like "your account will be closed in 24 hours!") — that's a huge red flag. Legit companies don't do that.</div>
+                                <div class="comment-time">30m ago <span class="comment-reply">Reply</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARTICLES VIEW -->
+            <div id="articles-view" class="view-section hidden">
+                <div class="feed-header">
+                    <div style="display:flex;gap:6px;background:rgba(226,232,240,0.5);border-radius:14px;padding:4px;">
+                        <button class="tab" style="border:none;cursor:pointer;" onclick="switchView('forum')">📊 Forum Posts</button>
+                        <button class="tab active" style="border:none;cursor:pointer;" onclick="switchView('articles')">📰 Articles</button>
+                    </div>
+                </div>
+                <div class="tabs">
+                    <div class="tab active">Latest</div>
+                    <div class="tab">Popular</div>
+                    <div class="tab">Saved</div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <div class="article-thumb">🔒</div>
+                        <div>
+                            <div class="article-title">Why two-factor authentication is no longer optional in 2025</div>
+                            <div class="article-desc">Password breaches are at an all-time high. Here's a plain-English guide to enabling 2FA on every account that matters.</div>
+                        </div>
+                    </div>
+                    <div class="article-footer">
+                        <span class="article-source">ShieldLearn Guides</span>
+                        <span class="tag">Cyber Safety</span>
+                        <span class="article-date">Today</span>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <div class="article-thumb">🎣</div>
+                        <div>
+                            <div class="article-title">Phishing attacks are getting smarter — AI is making them harder to spot</div>
+                            <div class="article-desc">Criminals are now using AI to write convincing, personalised phishing emails. Here's what's changed and how to stay protected.</div>
+                        </div>
+                    </div>
+                    <div class="article-footer">
+                        <span class="article-source">Cyber News UK</span>
+                        <span class="tag">Phishing</span>
+                        <span class="article-date">Yesterday</span>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <div class="article-thumb">🛡️</div>
+                        <div>
+                            <div class="article-title">The 5 most common online scams targeting UK residents in 2025</div>
+                            <div class="article-desc">From fake parcel delivery texts to investment scams — a rundown of the most widespread tactics and how to avoid them.</div>
+                        </div>
+                    </div>
+                    <div class="article-footer">
+                        <span class="article-source">Which? Digital Safety</span>
+                        <span class="tag">Scams</span>
+                        <span class="article-date">2 days ago</span>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <div class="article-thumb">🔑</div>
+                        <div>
+                            <div class="article-title">How to create a strong password you'll actually remember</div>
+                            <div class="article-desc">Security experts weigh in on passphrases, password managers, and why "P@ssw0rd1" is still terrible.</div>
+                        </div>
+                    </div>
+                    <div class="article-footer">
+                        <span class="article-source">ShieldLearn Guides</span>
+                        <span class="tag">Passwords</span>
+                        <span class="article-date">3 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== RIGHT PANEL ===== -->
+        <div class="right-panel">
+
+            <div class="panel-card">
+                <div class="panel-title">Forum Stats</div>
+                <div class="stats-grid">
+                    <div class="stat-box"><div class="stat-number">1.2k</div><div class="stat-label">Members</div></div>
+                    <div class="stat-box"><div class="stat-number">4.8k</div><div class="stat-label">Posts</div></div>
+                    <div class="stat-box"><div class="stat-number">18k</div><div class="stat-label">Comments</div></div>
+                    <div class="stat-box"><div class="stat-number">94</div><div class="stat-label">Online Now</div></div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-title">Trending Topics</div>
+                <div class="trending-item">
+                    <div class="trending-num">01</div>
+                    <div><div class="trending-title">#phishing-emails</div><div class="trending-count">340 posts</div></div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-num">02</div>
+                    <div><div class="trending-title">#password-managers</div><div class="trending-count">271 posts</div></div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-num">03</div>
+                    <div><div class="trending-title">#microsoft-scam</div><div class="trending-count">198 posts</div></div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-num">04</div>
+                    <div><div class="trending-title">#module-help</div><div class="trending-count">147 posts</div></div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-title">Active Members</div>
+                <div class="user-item">
+                    <div class="user-avatar" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;">SL</div>
+                    <div><div class="user-name">shield_learner</div><div class="user-rep">420 rep</div></div>
+                    <div class="online-dot"></div>
+                </div>
+                <div class="user-item">
+                    <div class="user-avatar" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#166534;">JM</div>
+                    <div><div class="user-name">jm_secure</div><div class="user-rep">310 rep</div></div>
+                    <div class="online-dot"></div>
+                </div>
+                <div class="user-item">
+                    <div class="user-avatar" style="background:linear-gradient(135deg,#fef9c3,#fde68a);color:#92400e;">S1</div>
+                    <div><div class="user-name">safetyFirst99</div><div class="user-rep">285 rep</div></div>
+                    <div class="offline-dot"></div>
+                </div>
+                <div class="user-item">
+                    <div class="user-avatar" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);color:#5b21b6;">SR</div>
+                    <div><div class="user-name">shield_rookie</div><div class="user-rep">140 rep</div></div>
+                    <div class="online-dot"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function switchView(view) {
+            document.getElementById('forum-view').classList.toggle('hidden', view !== 'forum');
+            document.getElementById('articles-view').classList.toggle('hidden', view !== 'articles');
+        }
+
+
+        function openPost() {
+            const c = document.getElementById('composer');
+            c.style.display = c.style.display === 'none' || c.style.display === '' ? 'block' : 'none';
+        }
+
+        function closePost() {
+            document.getElementById('composer').style.display = 'none';
+        }
+
+        function submitPost() {
+            const t = document.getElementById('post-title-input').value.trim();
+            const b = document.getElementById('post-body-input').value.trim();
+            const cat = document.getElementById('post-cat-input').value;
+            if (!t) { alert('Please enter a post title.'); return; }
+
+            const catColors = {
+                'Cyber Safety': 'background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;',
+                'Passwords': 'background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#166534;',
+                'Phishing': 'background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;',
+                'Scams': 'background:linear-gradient(135deg,#fef9c3,#fde68a);color:#92400e;',
+                'Module Help': 'background:linear-gradient(135deg,#ede9fe,#ddd6fe);color:#5b21b6;'
+            };
+
+            const card = document.createElement('div');
+            card.className = 'post-card';
+            card.onclick = function() { openComments(this); };
+            card.innerHTML = `
+                <div class="vote-col">
+                    <div class="vote-btn" onclick="event.stopPropagation();vote(this,1)">▲</div>
+                    <div class="vote-count">0</div>
+                    <div class="vote-btn" onclick="event.stopPropagation();vote(this,-1)">▼</div>
+                </div>
+                <div>
+                    <div class="post-meta">
+                        <span class="post-category" style="${catColors[cat]}">${cat}</span>
+                        <span class="post-dot">•</span>
+                        <span class="post-author">by <strong>You</strong></span>
+                        <span class="post-dot">•</span>
+                        <span class="post-author">just now</span>
+                    </div>
+                    <div class="post-title">${t}</div>
+                    <div class="post-excerpt">${b}</div>
+                    <div class="post-footer"><div class="post-stat">💬 0 comments</div></div>
+                </div>`;
+            document.getElementById('posts-list').prepend(card);
+            document.getElementById('post-title-input').value = '';
+            document.getElementById('post-body-input').value = '';
+            closePost();
+        }
+
+        function openComments(card) {
+            document.getElementById('posts-list').style.display = 'none';
+            document.getElementById('comment-section').style.display = 'block';
+            document.getElementById('composer').style.display = 'none';
+        }
+
+        function closeComments() {
+            document.getElementById('posts-list').style.display = '';
+            document.getElementById('comment-section').style.display = 'none';
+        }
+
+        function postComment() {
+            const txt = document.getElementById('new-comment').value.trim();
+            if (!txt) return;
+            const el = document.createElement('div');
+            el.className = 'comment';
+            el.innerHTML = `
+                <div class="comment-avatar" style="background:linear-gradient(135deg,#bfdbfe,#93c5fd);color:#1e40af;">Me</div>
+                <div class="comment-body">
+                    <div class="comment-name">You</div>
+                    <div class="comment-text">${txt}</div>
+                    <div class="comment-time">just now <span class="comment-reply">Reply</span></div>
+                </div>`;
+            document.getElementById('comments-container').prepend(el);
+            document.getElementById('new-comment').value = '';
+        }
+
+        function vote(btn, dir) {
+            const col = btn.closest('.vote-col');
+            const counter = col.querySelector('.vote-count');
+            const upBtn = col.children[0];
+            const downBtn = col.children[2];
+
+            if (dir === 1) {
+                const wasVoted = upBtn.classList.contains('voted-up');
+                upBtn.classList.toggle('voted-up', !wasVoted);
+                downBtn.classList.remove('voted-down');
+                counter.textContent = parseInt(counter.textContent) + (wasVoted ? -1 : 1);
+            } else {
+                const wasVoted = downBtn.classList.contains('voted-down');
+                downBtn.classList.toggle('voted-down', !wasVoted);
+                upBtn.classList.remove('voted-up');
+                counter.textContent = parseInt(counter.textContent) + (wasVoted ? 1 : -1);
+            }
+        }
+
+        // Tab interactivity
+        document.querySelectorAll('.tabs').forEach(tabGroup => {
+            tabGroup.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabGroup.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                });
+            });
+        });
+
+        // Sidebar item interactivity
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
