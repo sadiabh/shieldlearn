@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+        /* ===== GLOBAL STYLES ===== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -19,7 +20,8 @@
             padding: 30px;
         }
 
-        /* Header */
+        /* ===== HEADER SECTION ===== */
+        /* Top navigation bar with logo, welcome message, and navigation buttons */
         .header {
             display: flex;
             justify-content: space-between;
@@ -32,27 +34,51 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        /* Logo on the left */
+        .logo {
+            width: 70px;
+            height: 70px;
+        }
+
+        /* Centered welcome message */
         .header h1 {
             font-size: 32px;
             color: #1e293b;
             font-weight: bold;
+            flex: 1;
+            text-align: center;
         }
 
-        /* Shield logo */
-        .shield-logo-small {
-            position: absolute;
-            top: 37px;
-            right: 45px;
+        /* Navigation menu on the right */
+        .header-nav {
+            display: flex;
+            gap: 10px;
         }
 
-        .shield-logo-small img {
-            width: 70px;
+        .nav-btn {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            color: #1e293b;
+            padding: 10px 20px;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Dashboard Layout */
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== DASHBOARD LAYOUT ===== */
+        /* Two-column layout for modules and achievements */
         .dashboard {
             display: grid;
-            grid-template-columns: 300px 1fr 350px;
+            grid-template-columns: 1fr 350px;
             gap: 25px;
             min-height: calc(100vh - 180px);
         }
@@ -73,37 +99,8 @@
             font-size: 24px;
         }
 
-        /* Left Menu */
-        .left-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .menu-btn {
-            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            color: #1e293b;
-        }
-
-        .menu-btn:hover {
-            background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .menu-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Quick Stats */
+        /* ===== QUICK STATS ===== */
+        /* Statistics boxes showing active and completed modules */
         .quick-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -130,7 +127,8 @@
             color: #475569;
         }
 
-        /* Current Modules */
+        /* ===== CURRENT MODULES GRID ===== */
+        /* Grid displaying user's active modules */
         .modules-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -169,7 +167,7 @@
             background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 100%);
         }
 
-        /* Achievements */
+        /* ===== ACHIEVEMENTS SECTION ===== */
         .achievements-content {
             flex: 1;
             display: flex;
@@ -198,6 +196,7 @@
             transition: all 0.3s ease;
         }
 
+        /* Earned badge animation */
         .star.earned {
             color: #fbbf24;
             animation: starPulse 2s ease-in-out infinite;
@@ -225,6 +224,7 @@
             margin-top: 10px;
         }
 
+        /* Progress bar for badge completion */
         .progress-bar {
             width: 100%;
             height: 12px;
@@ -249,7 +249,7 @@
             margin-top: 8px;
         }
 
-        /* Recent Activity */
+        /* ===== RECENT ACTIVITY FEED ===== */
         .activity-section {
             margin-top: 20px;
             padding-top: 20px;
@@ -266,7 +266,7 @@
             border-left: 4px solid #3b82f6;
         }
 
-        /* Responsive Design */
+        /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1200px) {
             .dashboard {
                 grid-template-columns: 1fr;
@@ -282,8 +282,23 @@
                 padding: 15px;
             }
 
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
             .header h1 {
                 font-size: 24px;
+            }
+
+            .header-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
             }
 
             .modules-grid,
@@ -300,31 +315,31 @@
 
 <body>
 
-    <!-- Header -->
+    <!-- ===== HEADER WITH LOGO, WELCOME MESSAGE, AND NAVIGATION ===== -->
     <div class="header">
+        <!-- Logo on left -->
+        <img src="images/logo.png" alt="ShieldLearn Logo" class="logo">
+        
+        <!-- Centered welcome message -->
         <h1 id="welcomeText">Welcome!</h1>
+        
+        <!-- Navigation buttons on right -->
+        <div class="header-nav">
+            <button class="nav-btn" onclick="location.href='modulelist.html'">All Modules</button>
+            <button class="nav-btn" onclick="location.href='forum.html'">Forum</button>
+            <button class="nav-btn" onclick="location.href='settings.html'">Settings</button>
+            <button class="nav-btn" onclick="alert('Chat with AL!')">Ask AL</button>
+        </div>
     </div>
 
-    <div class="shield-logo-small">
-        <img src="images/logo.png" alt="logo">
-    </div>
-    
-
-    <!-- Dashboard -->
+    <!-- ===== DASHBOARD CONTENT ===== -->
     <div class="dashboard">
 
-        <!-- Left Column - Navigation -->
-        <div class="left-menu">
-            <div class="menu-btn" onclick="location.href='modulelist.html'">📚 All Modules</div>
-            <div class="menu-btn" onclick="location.href='forum.html'">📊 Online Forum</div>
-            <div class="menu-btn" onclick="location.href='settings.html'">⚙️ Settings</div>
-            <div class="menu-btn" onclick="alert('Chat with AL!')">💬 Ask AL</div>
-        </div>
-
-        <!-- Middle Column - Current Modules -->
+        <!-- ===== MAIN CONTENT - MODULES ===== -->
         <div class="card">
             <h2>My Current Modules</h2>
             
+            <!-- Quick statistics -->
             <div class="quick-stats">
                 <div class="stat-box">
                     <div class="stat-number" id="moduleCount">0</div>
@@ -336,8 +351,10 @@
                 </div>
             </div>
 
+            <!-- Module cards grid -->
             <div class="modules-grid" id="modulesContainer"></div>
 
+            <!-- Recent activity feed -->
             <div class="activity-section">
                 <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 12px;">Recent Activity</h3>
                 <div class="activity-item">🎯 Started "Password on Lock" module</div>
@@ -346,12 +363,13 @@
             </div>
         </div>
 
-        <!-- Right Column - Achievements -->
+        <!-- ===== RIGHT SIDEBAR - ACHIEVEMENTS ===== -->
         <div class="card">
             <div class="achievements-content">
                 <div>
                     <h2>My Achievement Badges</h2>
                     
+                    <!-- Badge stars grid -->
                     <div class="stars">
                         <div class="star-container">
                             <div class="star earned" id="star1">★</div>
@@ -371,11 +389,13 @@
                         </div>
                     </div>
 
+                    <!-- Progress bar -->
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
                     </div>
                     <div class="progress-text" id="progressText">1 of 4 badges earned</div>
 
+                    <!-- Motivation text -->
                     <div class="achievement-text">
                         Complete more modules to earn more stars and unlock special rewards! 🎉
                     </div>
@@ -386,14 +406,16 @@
     </div>
 
     <script>
-        // Welcome message
-        const firstName = "User"; //localStorage.getItem("firstName") || "User";
+        // ===== WELCOME MESSAGE =====
+        // Display personalized welcome (will connect to backend/localStorage later)
+        const firstName = "User"; // Future: localStorage.getItem("firstName") || "User"
         document.getElementById("welcomeText").innerText = `Welcome ${firstName}!`;
 
-        // Modules
+        // ===== MODULE MANAGEMENT =====
         const container = document.getElementById("modulesContainer");
-        const storedModules = null; // JSON.parse(localStorage.getItem("currentModules"));
+        const storedModules = null; // Future: JSON.parse(localStorage.getItem("currentModules"))
 
+        // Default modules shown to new users
         const defaultModules = [
             "Intro to: Staying Safe",
             "Shield against Phishers",
@@ -401,18 +423,21 @@
             "No more Baiting!"
         ];
 
+        // Use stored modules if available, otherwise show defaults
         const modulesToShow = (storedModules && storedModules.length > 0)
             ? storedModules
             : defaultModules;
 
-        // Update module count
+        // Update statistics
         document.getElementById("moduleCount").innerText = modulesToShow.length;
-        document.getElementById("completedCount").innerText = "1"; // T
+        document.getElementById("completedCount").innerText = "1"; // Future: Dynamic from backend
 
+        // Render module cards
         modulesToShow.forEach(module => {
             const div = document.createElement("div");
             div.className = "module-box";
 
+            // Add default styling if no custom modules
             if (!storedModules || storedModules.length === 0) {
                 div.classList.add("default-module");
             }
@@ -422,13 +447,14 @@
             container.appendChild(div);
         });
 
-        // Animate progress bar
+        // ===== PROGRESS ANIMATION =====
+        // Animate progress bar after page load
         setTimeout(() => {
             document.getElementById("progressFill").style.width = "25%";
         }, 500);
 
-        // Update progress text based on earned stars
-        const earnedStars = 1; // dynamic
+        // Update progress text
+        const earnedStars = 1; // Future: Dynamic from user data
         document.getElementById("progressText").innerText = `${earnedStars} of 4 badges earned`;
     </script>
 
